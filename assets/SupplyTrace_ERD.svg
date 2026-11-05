@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2300" height="1560" viewBox="0 0 2300 1560">
+  <rect width="2300" height="1560" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 z" fill="#64748B"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 z" fill="#244C66"/>
+    </marker>
+  </defs>
+  <text x="70" y="68" font-family="Times New Roman, Times, serif" font-size="38" font-weight="700" fill="#16202A" text-anchor="start">SupplyTrace entity relationship diagram</text>
+<text x="72" y="106" font-family="Times New Roman, Times, serif" font-size="20" font-weight="400" fill="#52606D" text-anchor="start">Schema v1. Each card lists its primary, foreign and unique keys.</text>
+<text x="60" y="160" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="#52606D" text-anchor="start">MASTER DATA</text>
+<text x="550" y="160" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="#52606D" text-anchor="start">SALES AND PRODUCTION</text>
+<text x="1100" y="160" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="#52606D" text-anchor="start">PROCUREMENT</text>
+<text x="1620" y="160" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="#52606D" text-anchor="start">LOGISTICS</text>
+<text x="60" y="1165" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="#52606D" text-anchor="start">EVENT AND AUDIT</text>
+<rect x="60" y="200" width="400" height="170" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="86" y="242" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">entities</text>
+<text x="86" y="278" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK entity_id</text>
+<text x="86" y="305" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">UQ entity_code</text>
+<text x="86" y="332" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">entity_type</text>
+<rect x="60" y="410" width="400" height="150" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="86" y="452" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">locations</text>
+<text x="86" y="488" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK location_id</text>
+<text x="86" y="515" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK owner_entity_id</text>
+<text x="86" y="542" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">UQ location_code</text>
+<rect x="60" y="600" width="400" height="150" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="86" y="642" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">items</text>
+<text x="86" y="678" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK item_id</text>
+<text x="86" y="705" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">UQ item_code</text>
+<text x="86" y="732" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">unit, lot tracking</text>
+<rect x="550" y="200" width="460" height="170" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="576" y="242" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">orders</text>
+<text x="576" y="278" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK order_id</text>
+<text x="576" y="305" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK customer_id</text>
+<text x="576" y="332" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">UQ order_number</text>
+<text x="576" y="359" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">required_date, status</text>
+<rect x="550" y="410" width="460" height="190" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="576" y="452" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">order_lines</text>
+<text x="576" y="488" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK order_line_id</text>
+<text x="576" y="515" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK order_id, FK item_id</text>
+<text x="576" y="542" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">UQ order_id, line_number</text>
+<text x="576" y="569" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">quantity, required_date</text>
+<rect x="550" y="640" width="460" height="170" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="576" y="682" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">production_orders</text>
+<text x="576" y="718" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK production_order_id</text>
+<text x="576" y="745" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK factory_id</text>
+<text x="576" y="772" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK source_order_line_id</text>
+<text x="576" y="799" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">time and status</text>
+<rect x="550" y="850" width="460" height="170" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="576" y="892" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">delivery_commitments</text>
+<text x="576" y="928" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK commitment_id</text>
+<text x="576" y="955" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK order_line_id</text>
+<text x="576" y="982" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">UQ order_line_id, version</text>
+<text x="576" y="1009" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">one ACTIVE row per line</text>
+<rect x="1100" y="200" width="430" height="170" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="1126" y="242" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">purchase_orders</text>
+<text x="1126" y="278" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK purchase_order_id</text>
+<text x="1126" y="305" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK supplier_id</text>
+<text x="1126" y="332" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">UQ po_number</text>
+<text x="1126" y="359" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">status</text>
+<rect x="1100" y="410" width="430" height="190" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="1126" y="452" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">po_lines</text>
+<text x="1126" y="488" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK po_line_id</text>
+<text x="1126" y="515" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK purchase_order_id</text>
+<text x="1126" y="542" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK item_id</text>
+<text x="1126" y="569" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">quantity, quantity_received</text>
+<rect x="1100" y="640" width="430" height="170" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="1126" y="682" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">purchase_line_allocations</text>
+<text x="1126" y="718" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK/FK po_line_id</text>
+<text x="1126" y="745" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">PK/FK order_line_id</text>
+<text x="1126" y="772" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">allocated_quantity</text>
+<rect x="1620" y="200" width="420" height="170" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="1646" y="242" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">shipments</text>
+<text x="1646" y="278" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK shipment_id</text>
+<text x="1646" y="305" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK carrier_id</text>
+<text x="1646" y="332" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK origin / destination</text>
+<text x="1646" y="359" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">planned / actual time</text>
+<rect x="1620" y="410" width="420" height="170" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="1646" y="452" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">shipment_lines</text>
+<text x="1646" y="488" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK shipment_line_id</text>
+<text x="1646" y="515" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK shipment_id</text>
+<text x="1646" y="542" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK order_line_id OR po_line_id</text>
+<text x="1646" y="569" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">quantity</text>
+<rect x="60" y="1200" width="390" height="180" rx="8" fill="#EEF4F8" stroke="#244C66" stroke-width="2.5"/>
+<text x="86" y="1242" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">event_types</text>
+<text x="86" y="1278" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK event_type_code</text>
+<text x="86" y="1305" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">category, default_status</text>
+<text x="86" y="1332" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">EPCIS mapping</text>
+<rect x="490" y="1200" width="900" height="320" rx="8" fill="#EEF4F8" stroke="#244C66" stroke-width="2.5"/>
+<text x="516" y="1242" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">supply_chain_events</text>
+<text x="516" y="1278" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK event_id | FK event_type_code</text>
+<text x="516" y="1305" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">entity_type + entity_id | FK location_id</text>
+<text x="516" y="1332" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">optional order / order_line FK</text>
+<text x="516" y="1359" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">optional purchase_order / po_line FK</text>
+<text x="516" y="1386" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">optional production / shipment / commitment FK</text>
+<text x="516" y="1413" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">event_time, status, payload JSONB</text>
+<text x="516" y="1440" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">FK caused_by_event_id (self)</text>
+<text x="516" y="1467" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">causal_depth 0 to 64</text>
+<text x="516" y="1494" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">append-only event fact</text>
+<rect x="1450" y="1200" width="330" height="180" rx="8" fill="#EEF4F8" stroke="#244C66" stroke-width="2.5"/>
+<text x="1476" y="1242" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">causal_links</text>
+<text x="1476" y="1278" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK/FK cause_event_id</text>
+<text x="1476" y="1305" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">PK/FK effect_event_id</text>
+<text x="1476" y="1332" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">type, weight, cycle check</text>
+<rect x="1830" y="1200" width="390" height="180" rx="8" fill="#EEF4F8" stroke="#244C66" stroke-width="2.5"/>
+<text x="1856" y="1242" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">audit_log</text>
+<text x="1856" y="1278" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">PK audit_id</text>
+<text x="1856" y="1305" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">table_name, operation</text>
+<text x="1856" y="1332" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">old_data / new_data</text>
+<line x1="460" y1="285" x2="550" y2="285" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="260" y1="370" x2="260" y2="410" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="780" y1="370" x2="780" y2="410" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1315" y1="370" x2="1315" y2="410" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1830" y1="370" x2="1830" y2="410" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="450" y1="1290" x2="490" y2="1290" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1390" y1="1290" x2="1450" y2="1290" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+</svg>

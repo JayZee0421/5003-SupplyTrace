@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="900" viewBox="0 0 1800 900">
+  <rect width="1800" height="900" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 z" fill="#64748B"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 z" fill="#244C66"/>
+    </marker>
+  </defs>
+  <text x="70" y="72" font-family="Times New Roman, Times, serif" font-size="38" font-weight="700" fill="#16202A" text-anchor="start">SupplyTrace system architecture</text>
+<text x="72" y="112" font-family="Times New Roman, Times, serif" font-size="20" font-weight="400" fill="#52606D" text-anchor="start">Event facts are stored in PostgreSQL. FastAPI reads them for the React interface.</text>
+<rect x="60" y="220" width="300" height="230" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="86" y="262" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">Supply Operations</text>
+<text x="86" y="298" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">Order or event input</text>
+<text x="86" y="325" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">Root cause and impact</text>
+<text x="86" y="352" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">Stage duration</text>
+<rect x="430" y="220" width="300" height="230" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="456" y="262" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">React and Recharts</text>
+<text x="456" y="298" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">Timeline view</text>
+<text x="456" y="325" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">Affected orders</text>
+<text x="456" y="352" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">Average / P90 chart</text>
+<rect x="800" y="220" width="310" height="230" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="826" y="262" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">FastAPI</text>
+<text x="826" y="298" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">Timeline API</text>
+<text x="826" y="325" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">Recursive queries</text>
+<text x="826" y="352" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">Duration API</text>
+<rect x="1240" y="220" width="500" height="430" rx="8" fill="#EEF4F8" stroke="#244C66" stroke-width="2.5"/>
+<text x="1266" y="262" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">PostgreSQL 16</text>
+<text x="1266" y="298" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">supply_chain_events</text>
+<text x="1266" y="325" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">causal_links, event_types</text>
+<text x="1266" y="352" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">orders and logistics</text>
+<text x="1266" y="379" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">indexes and audit_log</text>
+<text x="1266" y="406" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">recursive CTE and JSONB</text>
+<rect x="800" y="620" width="310" height="160" rx="8" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="2.5"/>
+<text x="826" y="662" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="#16202A" text-anchor="start">Data generator</text>
+<text x="826" y="698" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#16202A" text-anchor="start">Deterministic seed</text>
+<text x="826" y="725" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="#52606D" text-anchor="start">Known exception cases</text>
+<line x1="360" y1="315" x2="430" y2="315" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)"/>
+<line x1="730" y1="315" x2="800" y2="315" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)"/>
+<line x1="1110" y1="315" x2="1240" y2="315" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="370" y="283" width="50" height="25" rx="4" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="1.5"/>
+<text x="395" y="302" font-family="Times New Roman, Times, serif" font-size="15" font-weight="700" fill="#52606D" text-anchor="middle">HTTPS</text>
+<rect x="742" y="283" width="46" height="25" rx="4" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="1.5"/>
+<text x="765" y="302" font-family="Times New Roman, Times, serif" font-size="15" font-weight="700" fill="#52606D" text-anchor="middle">JSON</text>
+<rect x="1152" y="283" width="45" height="25" rx="4" fill="#FFFFFF" stroke="#B8C2CC" stroke-width="1.5"/>
+<text x="1174.5" y="302" font-family="Times New Roman, Times, serif" font-size="15" font-weight="700" fill="#52606D" text-anchor="middle">SQL</text>
+<path d="M 1110 700 L 1180 700 L 1180 530 L 1240 530" fill="none" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)"/>
+</svg>
