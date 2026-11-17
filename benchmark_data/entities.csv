@@ -1,0 +1,7 @@
+entity_id,entity_code,entity_name,entity_type,country_code,created_at,updated_at
+1,FAC-SYN,Synthetic assembly plant,FACTORY,CN,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00
+2,SUP-SYN,Synthetic component supplier,SUPPLIER,CN,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00
+3,WH-SYN,Synthetic receiving warehouse,WAREHOUSE,CN,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00
+4,CAR-SYN,Synthetic freight carrier,CARRIER,CN,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00
+5,CUS-SYN-A,Synthetic customer A,CUSTOMER,CN,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00
+6,CUS-SYN-B,Synthetic customer B,CUSTOMER,CN,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00

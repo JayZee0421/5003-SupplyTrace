@@ -1,0 +1,4 @@
+cause_event_id,effect_event_id,link_type,weight,note,created_at
+3,13,CONTRIBUTING,1.000,supplier_delay,2026-01-02 14:24:00+00:00
+23,33,CONTRIBUTING,1.000,quality_failure,2026-01-02 17:08:00+00:00
+46,56,CONTRIBUTING,1.000,transport_disruption,2026-01-03 14:48:00+00:00

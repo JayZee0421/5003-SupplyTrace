@@ -1,0 +1,67 @@
+{
+  "event_count": 57,
+  "format_version": 1,
+  "seed": 5003,
+  "tables": {
+    "causal_links": {
+      "rows": 3,
+      "sha256": "4212ebf159f0c7a69a2a4de3588d82e6aa8adf9d7a6e165ae6dedc03710fdff7"
+    },
+    "delivery_commitments": {
+      "rows": 12,
+      "sha256": "94624a6fcf1497f800c0fbd38f1de8b07fee7803716398d2c264ba8e8b514aa6"
+    },
+    "entities": {
+      "rows": 6,
+      "sha256": "ff9e29ef238f1e45d2a922a8d3ecb8dc3a46a778232c7f246def4f066a13fa6c"
+    },
+    "event_types": {
+      "rows": 11,
+      "sha256": "f07dc63fd43d417241c251c1f8ba09f54632d0b16bb16eb49beb493fd231ead1"
+    },
+    "items": {
+      "rows": 2,
+      "sha256": "1bdad97f0d1737b207a8a7c550dbbd2e414d9c31d0cdb896e36957303dbab652"
+    },
+    "locations": {
+      "rows": 5,
+      "sha256": "2725b947e01225f6afe49be84085a42b81b7b47947a49c714f8485538310123d"
+    },
+    "order_lines": {
+      "rows": 6,
+      "sha256": "853c9bf96215e7bef16229b9a2984aff61e008aee4a096d48c3a95f8d7136064"
+    },
+    "orders": {
+      "rows": 6,
+      "sha256": "039bd87abc74773913e7b717aa58c9372753dc515ae7a7b8615769b0857d5fc7"
+    },
+    "po_lines": {
+      "rows": 6,
+      "sha256": "9522e79a8299b4724222ca0c31fa2b28f4159ac5b4df0dcd80ad689a0412fc41"
+    },
+    "production_orders": {
+      "rows": 6,
+      "sha256": "07dbff28eb8df7484802f58ba12d11985ad6e09b7a7ef739b11cfabd98af76c0"
+    },
+    "purchase_line_allocations": {
+      "rows": 6,
+      "sha256": "5f7c06bda05f12a2e6c9c7882c74966c003cf356d5bd678600b4f6409eefcfed"
+    },
+    "purchase_orders": {
+      "rows": 6,
+      "sha256": "42849b11ecdd1733e5bfa7b19b2c41e9119ea015fafe1f52d01e1ab2f7bf3057"
+    },
+    "shipment_lines": {
+      "rows": 6,
+      "sha256": "ccff08cf9dc7c084cdf9c8be56e96e68e9ec9084f093af7e0d760ed1c974adbf"
+    },
+    "shipments": {
+      "rows": 6,
+      "sha256": "f124209480d2b151352b2550c74f9781809fd06201c18dccdc5745ee02127f0f"
+    },
+    "supply_chain_events": {
+      "rows": 57,
+      "sha256": "588c6b1b7006d9f3a427ebaf4c870645bf3b83dff67ab68e5e772a0439982a46"
+    }
+  }
+}

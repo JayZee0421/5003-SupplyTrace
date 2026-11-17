@@ -1,0 +1,12 @@
+event_type_code,event_name,category,default_status,is_exception,gs1_epcis_mapping,mapping_note,description
+ORDER_CONFIRMED,Order confirmed,ORDER,NORMAL,False,,Order lifecycle event,A customer order has been accepted and frozen for fulfilment.
+PURCHASE_CREATED,Purchase order issued,PROCUREMENT,NORMAL,False,,Business transaction event,A purchase order has been issued to an upstream supplier.
+SUPPLIER_CONFIRMED,Supplier confirmed,PROCUREMENT,NORMAL,False,,Supplier commitment event,The supplier has accepted the requested quantity and date.
+SUPPLIER_DELAYED,Supplier delay reported,PROCUREMENT,WARNING,True,,Exception event,The supplier has reported a delay that can affect downstream work.
+QUALITY_CHECK,Quality check completed,QUALITY,NORMAL,False,ObjectEvent,"Status field distinguishes pass, warning and failure",A material or finished-good lot has completed a quality inspection.
+PRODUCTION_STARTED,Production started,PRODUCTION,NORMAL,False,TransformationEvent,Inputs and output are described in payload when needed,Manufacturing work has started for a production order.
+PRODUCTION_COMPLETED,Production completed,PRODUCTION,COMPLETED,False,TransformationEvent,Output lot may be recorded in payload,Manufacturing work has completed and output is available.
+SHIPMENT_DISPATCHED,Shipment dispatched,LOGISTICS,NORMAL,False,ShippingEvent,Carrier movement leaves the origin,A shipment has left its origin location.
+TRANSPORT_DISRUPTION,Transport disruption,LOGISTICS,WARNING,True,,Exception event,A transport exception has been reported or detected.
+SHIPMENT_ARRIVED,Shipment arrived,LOGISTICS,NORMAL,False,ReceivingEvent,Arrival at the destination location,A shipment has arrived at the destination location.
+DELIVERY_SIGNED,Delivery signed,DELIVERY,COMPLETED,False,,Proof-of-delivery event,The customer has accepted the delivered goods.

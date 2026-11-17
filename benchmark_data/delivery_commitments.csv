@@ -1,0 +1,13 @@
+commitment_id,order_line_id,version,committed_date,changed_at,reason,status,supersedes_commitment_id
+1,1,1,2026-01-02,2026-01-01 00:00:00+00:00,Initial promise,SUPERSEDED,
+2,1,2,2026-01-03,2026-01-01 02:24:00+00:00,supplier_delay,ACTIVE,1
+3,2,1,2026-01-01,2026-01-01 00:05:00+00:00,Initial promise,SUPERSEDED,
+4,2,2,2026-01-03,2026-01-01 02:24:00+00:00,supplier_delay,ACTIVE,3
+5,3,1,2026-01-01,2026-01-01 00:10:00+00:00,Initial promise,SUPERSEDED,
+6,3,2,2026-01-03,2026-01-01 05:08:00+00:00,quality_failure,ACTIVE,5
+7,4,1,2026-01-02,2026-01-01 00:15:00+00:00,Initial promise,SUPERSEDED,
+8,4,2,2026-01-03,2026-01-01 05:08:00+00:00,quality_failure,ACTIVE,7
+9,5,1,2026-01-02,2026-01-01 00:20:00+00:00,Initial promise,SUPERSEDED,
+10,5,2,2026-01-03,2026-01-02 01:47:00+00:00,transport_disruption,ACTIVE,9
+11,6,1,2026-01-02,2026-01-01 00:25:00+00:00,Initial promise,SUPERSEDED,
+12,6,2,2026-01-03,2026-01-02 01:47:00+00:00,transport_disruption,ACTIVE,11

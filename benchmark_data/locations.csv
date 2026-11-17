@@ -1,0 +1,6 @@
+location_id,location_code,location_name,owner_entity_id,country_code,created_at,updated_at
+1,LOC-SYN-1,Plant,1,CN,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00
+2,LOC-SYN-2,Supplier yard,2,CN,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00
+3,LOC-SYN-3,Warehouse,3,CN,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00
+4,LOC-SYN-4,Customer A dock,5,CN,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00
+5,LOC-SYN-5,Customer B dock,6,CN,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00

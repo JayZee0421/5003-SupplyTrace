@@ -1,0 +1,3 @@
+item_id,item_code,item_name,item_category,unit_of_measure,is_lot_tracked,created_at,updated_at
+1,RM-SYN,Machined component,RAW_MATERIAL,EA,True,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00
+2,FG-SYN,Pump housing,FINISHED_GOOD,EA,True,2026-01-01 00:00:00+00:00,2026-01-01 00:00:00+00:00
