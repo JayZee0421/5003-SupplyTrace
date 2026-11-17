@@ -1,0 +1,32 @@
+{
+  "properties": {
+    "order_id": {
+      "type": "integer",
+      "title": "Order Id"
+    },
+    "order_number": {
+      "type": "string",
+      "title": "Order Number"
+    },
+    "customer_name": {
+      "type": "string",
+      "title": "Customer Name"
+    },
+    "lines": {
+      "items": {
+        "$ref": "#/components/schemas/ImpactLine"
+      },
+      "type": "array",
+      "title": "Lines"
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "order_id",
+    "order_number",
+    "customer_name",
+    "lines"
+  ],
+  "title": "ImpactOrder"
+}

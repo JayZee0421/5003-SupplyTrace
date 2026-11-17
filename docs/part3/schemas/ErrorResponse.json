@@ -1,0 +1,13 @@
+{
+  "properties": {
+    "error": {
+      "$ref": "#/components/schemas/ErrorDetail"
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "error"
+  ],
+  "title": "ErrorResponse"
+}

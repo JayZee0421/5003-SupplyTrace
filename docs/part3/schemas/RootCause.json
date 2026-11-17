@@ -1,0 +1,78 @@
+{
+  "properties": {
+    "selected_event_id": {
+      "type": "integer",
+      "title": "Selected Event Id"
+    },
+    "max_depth": {
+      "type": "integer",
+      "title": "Max Depth"
+    },
+    "count": {
+      "type": "integer",
+      "title": "Count"
+    },
+    "nodes": {
+      "items": {
+        "$ref": "#/components/schemas/Node"
+      },
+      "type": "array",
+      "title": "Nodes"
+    },
+    "edges": {
+      "items": {
+        "$ref": "#/components/schemas/Edge"
+      },
+      "type": "array",
+      "title": "Edges"
+    },
+    "truncated": {
+      "type": "boolean",
+      "title": "Truncated",
+      "description": "At least one reachable node was excluded by max_depth."
+    },
+    "cycle_detected": {
+      "type": "boolean",
+      "title": "Cycle Detected",
+      "description": "A directed cycle was observed in the returned subgraph."
+    },
+    "earliest_exception_event_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Earliest Exception Event Id",
+      "description": "Earliest WARNING/FAILED by event_time then ID, in returned primary chain only."
+    },
+    "chain_start_event_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Chain Start Event Id",
+      "description": "A returned node with no primary parent; null if cycle or truncated before root."
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "selected_event_id",
+    "max_depth",
+    "count",
+    "nodes",
+    "edges",
+    "truncated",
+    "cycle_detected",
+    "earliest_exception_event_id",
+    "chain_start_event_id"
+  ],
+  "title": "RootCause"
+}

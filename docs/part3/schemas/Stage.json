@@ -1,0 +1,48 @@
+{
+  "properties": {
+    "stage_order": {
+      "type": "integer",
+      "title": "Stage Order"
+    },
+    "stage": {
+      "type": "string",
+      "title": "Stage"
+    },
+    "sample_lines": {
+      "type": "integer",
+      "title": "Sample Lines"
+    },
+    "average_hours": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Average Hours"
+    },
+    "p90_hours": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "P90 Hours"
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "stage_order",
+    "stage",
+    "sample_lines",
+    "average_hours",
+    "p90_hours"
+  ],
+  "title": "Stage"
+}

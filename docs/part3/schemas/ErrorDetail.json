@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "code": {
+      "type": "string",
+      "title": "Code"
+    },
+    "message": {
+      "type": "string",
+      "title": "Message"
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "code",
+    "message"
+  ],
+  "title": "ErrorDetail"
+}

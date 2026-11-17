@@ -1,0 +1,11 @@
+{
+  "/health": 200,
+  "/docs": 200,
+  "/openapi.json": 200,
+  "/api/orders/SO-SYN-000001/timeline": 200,
+  "/api/events/10/root-cause": 200,
+  "/api/events/3/impact": 200,
+  "/api/analytics/stage-durations": 200,
+  "/api/events/999999999/root-cause": 404,
+  "/api/events/0/impact": 422
+}

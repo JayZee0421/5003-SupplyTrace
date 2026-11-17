@@ -1,0 +1,49 @@
+{
+  "properties": {
+    "order_line_id": {
+      "type": "integer",
+      "title": "Order Line Id"
+    },
+    "line_number": {
+      "type": "integer",
+      "title": "Line Number"
+    },
+    "current_commitment": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Current Commitment"
+    },
+    "latest_affected_event_id": {
+      "type": "integer",
+      "title": "Latest Affected Event Id"
+    },
+    "latest_affected_event_time": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Latest Affected Event Time"
+    },
+    "causal_hops": {
+      "type": "integer",
+      "title": "Causal Hops",
+      "description": "Shortest hops to the latest affected event, not the minimum for the line."
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "order_line_id",
+    "line_number",
+    "current_commitment",
+    "latest_affected_event_id",
+    "latest_affected_event_time",
+    "causal_hops"
+  ],
+  "title": "ImpactLine"
+}

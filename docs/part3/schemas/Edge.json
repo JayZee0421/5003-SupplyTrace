@@ -1,0 +1,30 @@
+{
+  "properties": {
+    "cause_event_id": {
+      "type": "integer",
+      "title": "Cause Event Id"
+    },
+    "effect_event_id": {
+      "type": "integer",
+      "title": "Effect Event Id"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "PRIMARY",
+        "CONTRIBUTING",
+        "ALTERNATIVE",
+        "CORRECTIVE"
+      ],
+      "title": "Kind"
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "cause_event_id",
+    "effect_event_id",
+    "kind"
+  ],
+  "title": "Edge"
+}

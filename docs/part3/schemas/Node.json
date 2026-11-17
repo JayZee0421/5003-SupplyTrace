@@ -1,0 +1,167 @@
+{
+  "properties": {
+    "event_id": {
+      "type": "integer",
+      "title": "Event Id"
+    },
+    "event_type_code": {
+      "type": "string",
+      "title": "Event Type Code"
+    },
+    "event_name": {
+      "type": "string",
+      "title": "Event Name"
+    },
+    "event_time": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Event Time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "NORMAL",
+        "WARNING",
+        "FAILED",
+        "COMPLETED",
+        "CANCELLED"
+      ],
+      "title": "Status"
+    },
+    "is_exception": {
+      "type": "boolean",
+      "title": "Is Exception"
+    },
+    "entity_type": {
+      "type": "string",
+      "title": "Entity Type"
+    },
+    "entity_id": {
+      "type": "integer",
+      "title": "Entity Id"
+    },
+    "subject_entity": {
+      "type": "string",
+      "title": "Subject Entity"
+    },
+    "location_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Location Id"
+    },
+    "location_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Location Name"
+    },
+    "order_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Order Id"
+    },
+    "order_line_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Order Line Id"
+    },
+    "caused_by_event_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Caused By Event Id"
+    },
+    "causal_depth": {
+      "type": "integer",
+      "title": "Causal Depth"
+    },
+    "message": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Message"
+    },
+    "current_commitment": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Current Commitment"
+    },
+    "steps": {
+      "type": "integer",
+      "title": "Steps",
+      "description": "Shortest hops from selected event; selected event is 0."
+    },
+    "path": {
+      "items": {
+        "type": "integer"
+      },
+      "type": "array",
+      "title": "Path",
+      "description": "One deterministic shortest path, starting at selected event."
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type_code",
+    "event_name",
+    "event_time",
+    "status",
+    "is_exception",
+    "entity_type",
+    "entity_id",
+    "subject_entity",
+    "location_id",
+    "location_name",
+    "order_id",
+    "order_line_id",
+    "caused_by_event_id",
+    "causal_depth",
+    "message",
+    "current_commitment",
+    "steps",
+    "path"
+  ],
+  "title": "Node"
+}

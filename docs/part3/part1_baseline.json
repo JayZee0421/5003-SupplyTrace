@@ -1,0 +1,13 @@
+{
+  "timeline_count": 11,
+  "root_chain_count": 11,
+  "earliest_exception_event_id": 204,
+  "impacted_orders": [
+    "SO-2026-1101-A",
+    "SO-2026-1101-B"
+  ],
+  "events": 17,
+  "roots": 1,
+  "exceptions": 5,
+  "max_depth": 10
+}

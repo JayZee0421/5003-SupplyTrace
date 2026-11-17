@@ -1,0 +1,15 @@
+{
+  "properties": {
+    "status": {
+      "type": "string",
+      "const": "ok",
+      "title": "Status"
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "status"
+  ],
+  "title": "Health"
+}
