@@ -1,5 +1,17 @@
 # SupplyTrace 本地开发数据
 
+## Part 3 后端与核心查询
+
+已完成四类 FastAPI API、递归图查询、响应模型、错误处理及测试。详见 [成员 3 交付入口](docs/part3/README.md)、[启动说明](docs/part3/DATABASE_SETUP.md)、[API 契约](docs/part3/API_CONTRACT.md)、[查询计划对比](docs/part3/PERFORMANCE.md)。
+
+```bash
+.venv/bin/python -m pip install -r requirements-dev.txt
+# 先按启动说明配置 .env 并初始化独立 PostgreSQL 开发库
+.venv/bin/python -m uvicorn backend.main:app --host 127.0.0.1 --port 8001
+```
+
+Swagger：`http://127.0.0.1:8001/docs`。完整回归：`.venv/bin/python -m scripts.verify_part3`（需可创建独立测试库的本机 PostgreSQL）。本次 40 项测试通过；十万事件的 24 项数据检查通过。
+
 ## Part 2 合成数据
 
 需要 Python 3.11+、PostgreSQL 16+ 和 `psql`。在仓库根目录执行以下命令，使用独立的开发库。

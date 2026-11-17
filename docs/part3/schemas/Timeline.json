@@ -1,0 +1,27 @@
+{
+  "properties": {
+    "order_number": {
+      "type": "string",
+      "title": "Order Number"
+    },
+    "count": {
+      "type": "integer",
+      "title": "Count"
+    },
+    "events": {
+      "items": {
+        "$ref": "#/components/schemas/Event"
+      },
+      "type": "array",
+      "title": "Events"
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "order_number",
+    "count",
+    "events"
+  ],
+  "title": "Timeline"
+}

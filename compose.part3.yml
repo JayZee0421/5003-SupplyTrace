@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: supplytrace
+      POSTGRES_PASSWORD: ${PART3_DB_PASSWORD:-supplytrace}
+      POSTGRES_DB: supplytrace_part3
+    ports:
+      - "127.0.0.1:55433:5432"
+    volumes:
+      - part3_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U supplytrace -d supplytrace_part3"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+volumes:
+  part3_pgdata:

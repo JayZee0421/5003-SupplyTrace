@@ -1,0 +1,65 @@
+{
+  "properties": {
+    "selected_event_id": {
+      "type": "integer",
+      "title": "Selected Event Id"
+    },
+    "max_depth": {
+      "type": "integer",
+      "title": "Max Depth"
+    },
+    "count": {
+      "type": "integer",
+      "title": "Count"
+    },
+    "nodes": {
+      "items": {
+        "$ref": "#/components/schemas/Node"
+      },
+      "type": "array",
+      "title": "Nodes"
+    },
+    "edges": {
+      "items": {
+        "$ref": "#/components/schemas/Edge"
+      },
+      "type": "array",
+      "title": "Edges"
+    },
+    "truncated": {
+      "type": "boolean",
+      "title": "Truncated",
+      "description": "At least one reachable node was excluded by max_depth."
+    },
+    "cycle_detected": {
+      "type": "boolean",
+      "title": "Cycle Detected",
+      "description": "A directed cycle was observed in the returned subgraph."
+    },
+    "affected_order_count": {
+      "type": "integer",
+      "title": "Affected Order Count"
+    },
+    "orders": {
+      "items": {
+        "$ref": "#/components/schemas/ImpactOrder"
+      },
+      "type": "array",
+      "title": "Orders"
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "selected_event_id",
+    "max_depth",
+    "count",
+    "nodes",
+    "edges",
+    "truncated",
+    "cycle_detected",
+    "affected_order_count",
+    "orders"
+  ],
+  "title": "Impact"
+}

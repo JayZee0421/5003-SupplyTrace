@@ -1,0 +1,67 @@
+{
+  "properties": {
+    "order_number": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Order Number"
+    },
+    "order_line_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Order Line Id"
+    },
+    "start_time": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Start Time"
+    },
+    "end_time": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "End Time"
+    },
+    "stages": {
+      "items": {
+        "$ref": "#/components/schemas/Stage"
+      },
+      "type": "array",
+      "title": "Stages"
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "order_number",
+    "order_line_id",
+    "start_time",
+    "end_time",
+    "stages"
+  ],
+  "title": "Durations"
+}
