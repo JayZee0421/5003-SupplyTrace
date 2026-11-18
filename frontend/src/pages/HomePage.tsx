@@ -21,7 +21,7 @@ export function HomePage() {
       <section className="hero">
         <div className="hero__body">
           <h1 className="hero__title">
-            Trace a warning to its{' '}
+            Trace an exception to its{' '}
             <br />
             root cause
           </h1>
