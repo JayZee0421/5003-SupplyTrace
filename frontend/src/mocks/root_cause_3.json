@@ -1,0 +1,95 @@
+{
+  "selected_event_id": 3,
+  "max_depth": 64,
+  "count": 3,
+  "nodes": [
+    {
+      "event_id": 1,
+      "event_type_code": "ORDER_CONFIRMED",
+      "event_name": "Order confirmed",
+      "event_time": "2026-01-01T00:00:00Z",
+      "status": "NORMAL",
+      "is_exception": false,
+      "entity_type": "CUSTOMER",
+      "entity_id": 5,
+      "subject_entity": "Synthetic customer A",
+      "location_id": 4,
+      "location_name": "Customer A dock",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": null,
+      "causal_depth": 0,
+      "message": null,
+      "current_commitment": "2026-01-03",
+      "steps": 2,
+      "path": [
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "event_id": 2,
+      "event_type_code": "PURCHASE_CREATED",
+      "event_name": "Purchase order issued",
+      "event_time": "2026-01-01T00:35:00Z",
+      "status": "NORMAL",
+      "is_exception": false,
+      "entity_type": "FACTORY",
+      "entity_id": 1,
+      "subject_entity": "Synthetic assembly plant",
+      "location_id": 1,
+      "location_name": "Plant",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": 1,
+      "causal_depth": 1,
+      "message": null,
+      "current_commitment": "2026-01-03",
+      "steps": 1,
+      "path": [
+        3,
+        2
+      ]
+    },
+    {
+      "event_id": 3,
+      "event_type_code": "SUPPLIER_DELAYED",
+      "event_name": "Supplier delay reported",
+      "event_time": "2026-01-01T02:24:00Z",
+      "status": "WARNING",
+      "is_exception": true,
+      "entity_type": "SUPPLIER",
+      "entity_id": 2,
+      "subject_entity": "Synthetic component supplier",
+      "location_id": 2,
+      "location_name": "Supplier yard",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": 2,
+      "causal_depth": 2,
+      "message": "Supplier delay",
+      "current_commitment": "2026-01-03",
+      "steps": 0,
+      "path": [
+        3
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "cause_event_id": 1,
+      "effect_event_id": 2,
+      "kind": "PRIMARY"
+    },
+    {
+      "cause_event_id": 2,
+      "effect_event_id": 3,
+      "kind": "PRIMARY"
+    }
+  ],
+  "truncated": false,
+  "cycle_detected": false,
+  "earliest_exception_event_id": 3,
+  "chain_start_event_id": 1
+}

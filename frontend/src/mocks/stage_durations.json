@@ -1,0 +1,64 @@
+{
+  "order_number": null,
+  "order_line_id": null,
+  "start_time": null,
+  "end_time": null,
+  "stages": [
+    {
+      "stage_order": 1,
+      "stage": "Order to purchase",
+      "sample_lines": 10989,
+      "average_hours": 0.75,
+      "p90_hours": 0.95
+    },
+    {
+      "stage_order": 2,
+      "stage": "Purchase to supplier confirmation",
+      "sample_lines": 10989,
+      "average_hours": 2.86,
+      "p90_hours": 1.93
+    },
+    {
+      "stage_order": 3,
+      "stage": "Supplier confirmation to quality pass",
+      "sample_lines": 10989,
+      "average_hours": 3.4,
+      "p90_hours": 2.9
+    },
+    {
+      "stage_order": 4,
+      "stage": "Quality pass to production start",
+      "sample_lines": 10989,
+      "average_hours": 1.12,
+      "p90_hours": 1.43
+    },
+    {
+      "stage_order": 5,
+      "stage": "Production start to completion",
+      "sample_lines": 10989,
+      "average_hours": 4.5,
+      "p90_hours": 5.7
+    },
+    {
+      "stage_order": 6,
+      "stage": "Production completion to dispatch",
+      "sample_lines": 10989,
+      "average_hours": 1.5,
+      "p90_hours": 1.9
+    },
+    {
+      "stage_order": 7,
+      "stage": "Dispatch to arrival",
+      "sample_lines": 10989,
+      "average_hours": 13.06,
+      "p90_hours": 15.43
+    },
+    {
+      "stage_order": 8,
+      "stage": "Arrival to delivery signature",
+      "sample_lines": 10989,
+      "average_hours": 0.75,
+      "p90_hours": 0.95
+    }
+  ]
+}
