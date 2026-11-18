@@ -158,6 +158,11 @@ export function RootCausePage() {
                   <p className="panel__note">
                     No upstream cause is recorded for this event. It is the start of its own chain.
                   </p>
+                ) : data.earliest_exception_event_id === data.selected_event_id ? (
+                  <p className="panel__note">
+                    No earlier WARNING or FAILED event exists in this chain. The selected event is
+                    the earliest exception and the root of its own chain.
+                  </p>
                 ) : null}
                 <p className="panel__note">
                   Follows <span className="mono">caused_by_event_id</span> only. Earliest exception
