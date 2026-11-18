@@ -21,9 +21,11 @@ export function HomePage() {
       <section className="hero">
         <div className="hero__body">
           <h1 className="hero__title">
-            Trace an exception to its{' '}
-            <br />
-            root cause
+            Trace a <span className="nowrap">supply-chain</span>
+            <br className="hero__break-sm" />
+            {' '}event{' '}
+            <br className="hero__break-lg" />
+            from root cause to impact
           </h1>
           <p className="hero__subtitle">
             Order timelines, cause chains, downstream impact and stage durations, from one{' '}
