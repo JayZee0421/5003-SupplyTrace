@@ -1,5 +1,17 @@
 # SupplyTrace 本地开发数据
 
+## Part 4 前端与可视化
+
+React + TypeScript 前端，包含订单时间线、根因追溯、影响传导和环节耗时四个视图，首页打开即汇总种子订单的最新异常，全部读取 Part 3 的真实 API。启动、环境变量、路由和演示路径见 [前端说明](frontend/README.md)。
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+开发服务器默认将 `/api`、`/health` 代理到 `http://127.0.0.1:8001`。后端未启动时可设置 `VITE_USE_MOCK=true` 使用供应商延期场景的固定响应。演示分镜见 [docs/part4/VIDEO_STORYBOARD.md](docs/part4/VIDEO_STORYBOARD.md)。
+
 ## Part 3 后端与核心查询
 
 已完成四类 FastAPI API、递归图查询、响应模型、错误处理及测试。详见 [成员 3 交付入口](docs/part3/README.md)、[启动说明](docs/part3/DATABASE_SETUP.md)、[API 契约](docs/part3/API_CONTRACT.md)、[查询计划对比](docs/part3/PERFORMANCE.md)。

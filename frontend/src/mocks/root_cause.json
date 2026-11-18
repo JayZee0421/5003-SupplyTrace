@@ -1,0 +1,333 @@
+{
+  "selected_event_id": 10,
+  "max_depth": 64,
+  "count": 10,
+  "nodes": [
+    {
+      "event_id": 1,
+      "event_type_code": "ORDER_CONFIRMED",
+      "event_name": "Order confirmed",
+      "event_time": "2026-01-01T00:00:00Z",
+      "status": "NORMAL",
+      "is_exception": false,
+      "entity_type": "CUSTOMER",
+      "entity_id": 5,
+      "subject_entity": "Synthetic customer A",
+      "location_id": 4,
+      "location_name": "Customer A dock",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": null,
+      "causal_depth": 0,
+      "message": null,
+      "current_commitment": "2026-01-03",
+      "steps": 9,
+      "path": [
+        10,
+        9,
+        8,
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "event_id": 2,
+      "event_type_code": "PURCHASE_CREATED",
+      "event_name": "Purchase order issued",
+      "event_time": "2026-01-01T00:35:00Z",
+      "status": "NORMAL",
+      "is_exception": false,
+      "entity_type": "FACTORY",
+      "entity_id": 1,
+      "subject_entity": "Synthetic assembly plant",
+      "location_id": 1,
+      "location_name": "Plant",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": 1,
+      "causal_depth": 1,
+      "message": null,
+      "current_commitment": "2026-01-03",
+      "steps": 8,
+      "path": [
+        10,
+        9,
+        8,
+        7,
+        6,
+        5,
+        4,
+        3,
+        2
+      ]
+    },
+    {
+      "event_id": 3,
+      "event_type_code": "SUPPLIER_DELAYED",
+      "event_name": "Supplier delay reported",
+      "event_time": "2026-01-01T02:24:00Z",
+      "status": "WARNING",
+      "is_exception": true,
+      "entity_type": "SUPPLIER",
+      "entity_id": 2,
+      "subject_entity": "Synthetic component supplier",
+      "location_id": 2,
+      "location_name": "Supplier yard",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": 2,
+      "causal_depth": 2,
+      "message": "Supplier delay",
+      "current_commitment": "2026-01-03",
+      "steps": 7,
+      "path": [
+        10,
+        9,
+        8,
+        7,
+        6,
+        5,
+        4,
+        3
+      ]
+    },
+    {
+      "event_id": 4,
+      "event_type_code": "SUPPLIER_CONFIRMED",
+      "event_name": "Supplier confirmed",
+      "event_time": "2026-01-02T14:24:00Z",
+      "status": "NORMAL",
+      "is_exception": false,
+      "entity_type": "SUPPLIER",
+      "entity_id": 2,
+      "subject_entity": "Synthetic component supplier",
+      "location_id": 2,
+      "location_name": "Supplier yard",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": 3,
+      "causal_depth": 3,
+      "message": null,
+      "current_commitment": "2026-01-03",
+      "steps": 6,
+      "path": [
+        10,
+        9,
+        8,
+        7,
+        6,
+        5,
+        4
+      ]
+    },
+    {
+      "event_id": 5,
+      "event_type_code": "QUALITY_CHECK",
+      "event_name": "Quality check completed",
+      "event_time": "2026-01-02T16:45:00Z",
+      "status": "NORMAL",
+      "is_exception": false,
+      "entity_type": "FACTORY",
+      "entity_id": 1,
+      "subject_entity": "Synthetic assembly plant",
+      "location_id": 1,
+      "location_name": "Plant",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": 4,
+      "causal_depth": 4,
+      "message": null,
+      "current_commitment": "2026-01-03",
+      "steps": 5,
+      "path": [
+        10,
+        9,
+        8,
+        7,
+        6,
+        5
+      ]
+    },
+    {
+      "event_id": 6,
+      "event_type_code": "PRODUCTION_STARTED",
+      "event_name": "Production started",
+      "event_time": "2026-01-02T17:48:00Z",
+      "status": "NORMAL",
+      "is_exception": false,
+      "entity_type": "FACTORY",
+      "entity_id": 1,
+      "subject_entity": "Synthetic assembly plant",
+      "location_id": 1,
+      "location_name": "Plant",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": 5,
+      "causal_depth": 5,
+      "message": null,
+      "current_commitment": "2026-01-03",
+      "steps": 4,
+      "path": [
+        10,
+        9,
+        8,
+        7,
+        6
+      ]
+    },
+    {
+      "event_id": 7,
+      "event_type_code": "PRODUCTION_COMPLETED",
+      "event_name": "Production completed",
+      "event_time": "2026-01-02T23:04:00Z",
+      "status": "COMPLETED",
+      "is_exception": false,
+      "entity_type": "FACTORY",
+      "entity_id": 1,
+      "subject_entity": "Synthetic assembly plant",
+      "location_id": 1,
+      "location_name": "Plant",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": 6,
+      "causal_depth": 6,
+      "message": null,
+      "current_commitment": "2026-01-03",
+      "steps": 3,
+      "path": [
+        10,
+        9,
+        8,
+        7
+      ]
+    },
+    {
+      "event_id": 8,
+      "event_type_code": "SHIPMENT_DISPATCHED",
+      "event_name": "Shipment dispatched",
+      "event_time": "2026-01-03T00:28:00Z",
+      "status": "NORMAL",
+      "is_exception": false,
+      "entity_type": "CARRIER",
+      "entity_id": 4,
+      "subject_entity": "Synthetic freight carrier",
+      "location_id": 1,
+      "location_name": "Plant",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": 7,
+      "causal_depth": 7,
+      "message": null,
+      "current_commitment": "2026-01-03",
+      "steps": 2,
+      "path": [
+        10,
+        9,
+        8
+      ]
+    },
+    {
+      "event_id": 9,
+      "event_type_code": "SHIPMENT_ARRIVED",
+      "event_name": "Shipment arrived",
+      "event_time": "2026-01-03T13:22:00Z",
+      "status": "NORMAL",
+      "is_exception": false,
+      "entity_type": "CARRIER",
+      "entity_id": 4,
+      "subject_entity": "Synthetic freight carrier",
+      "location_id": 4,
+      "location_name": "Customer A dock",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": 8,
+      "causal_depth": 8,
+      "message": null,
+      "current_commitment": "2026-01-03",
+      "steps": 1,
+      "path": [
+        10,
+        9
+      ]
+    },
+    {
+      "event_id": 10,
+      "event_type_code": "DELIVERY_SIGNED",
+      "event_name": "Delivery signed",
+      "event_time": "2026-01-03T14:15:00Z",
+      "status": "WARNING",
+      "is_exception": true,
+      "entity_type": "CUSTOMER",
+      "entity_id": 5,
+      "subject_entity": "Synthetic customer A",
+      "location_id": 4,
+      "location_name": "Customer A dock",
+      "order_id": 1,
+      "order_line_id": 1,
+      "caused_by_event_id": 9,
+      "causal_depth": 9,
+      "message": null,
+      "current_commitment": "2026-01-03",
+      "steps": 0,
+      "path": [
+        10
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "cause_event_id": 1,
+      "effect_event_id": 2,
+      "kind": "PRIMARY"
+    },
+    {
+      "cause_event_id": 2,
+      "effect_event_id": 3,
+      "kind": "PRIMARY"
+    },
+    {
+      "cause_event_id": 3,
+      "effect_event_id": 4,
+      "kind": "PRIMARY"
+    },
+    {
+      "cause_event_id": 4,
+      "effect_event_id": 5,
+      "kind": "PRIMARY"
+    },
+    {
+      "cause_event_id": 5,
+      "effect_event_id": 6,
+      "kind": "PRIMARY"
+    },
+    {
+      "cause_event_id": 6,
+      "effect_event_id": 7,
+      "kind": "PRIMARY"
+    },
+    {
+      "cause_event_id": 7,
+      "effect_event_id": 8,
+      "kind": "PRIMARY"
+    },
+    {
+      "cause_event_id": 8,
+      "effect_event_id": 9,
+      "kind": "PRIMARY"
+    },
+    {
+      "cause_event_id": 9,
+      "effect_event_id": 10,
+      "kind": "PRIMARY"
+    }
+  ],
+  "truncated": false,
+  "cycle_detected": false,
+  "earliest_exception_event_id": 3,
+  "chain_start_event_id": 1
+}
