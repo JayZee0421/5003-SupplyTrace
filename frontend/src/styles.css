@@ -836,6 +836,10 @@ button {
   letter-spacing: -0.025em;
 }
 
+.hero__break-sm {
+  display: none;
+}
+
 .hero__subtitle {
   max-width: 680px;
   margin: 16px 0 24px;
@@ -2364,10 +2368,15 @@ a.graph-node:hover {
   }
 
   .hero__title {
+    font-size: clamp(30px, 9vw, 36px);
     text-wrap: balance;
   }
 
-  .hero__title br {
+  .hero__break-sm {
+    display: inline;
+  }
+
+  .hero__break-lg {
     display: none;
   }
 }
