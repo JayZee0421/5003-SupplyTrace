@@ -531,6 +531,30 @@ button {
   accent-color: var(--accent);
 }
 
+:root[data-color-vision] .tag--exception,
+:root[data-color-vision] .preview-step__tag,
+:root[data-color-vision] .node-tag--earliest {
+  border-color: var(--warning);
+  background: transparent;
+  color: var(--warning);
+}
+
+:root[data-color-vision] .tag--latest,
+:root[data-color-vision] .node-tag--selected {
+  border-color: var(--accent);
+  background: transparent;
+  color: var(--accent-strong);
+}
+
+:root[data-color-vision] .event-card--exception {
+  border-bottom-color: var(--warning);
+}
+
+:root[data-color-vision] .notice--warning {
+  border-color: var(--warning);
+  background: transparent;
+}
+
 .display__option-label {
   color: var(--text);
   font-size: 12.5px;
