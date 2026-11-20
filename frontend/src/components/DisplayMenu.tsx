@@ -37,7 +37,7 @@ const COLOR_VISION: Record<
   },
   monochrome: {
     label: 'Monochrome',
-    hint: 'Lightness steps only; icons and labels stay.',
+    hint: 'Lightness steps plus marker shapes; icons and labels stay.',
     attribute: 'monochrome',
   },
 }
