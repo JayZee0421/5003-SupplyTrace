@@ -555,6 +555,44 @@ button {
   background: transparent;
 }
 
+:root[data-color-vision] .graph-node--earliest {
+  border-color: var(--warning);
+}
+
+:root[data-color-vision] .graph-node--selected {
+  background: var(--surface-2);
+  box-shadow: 0 0 0 3px var(--accent-wash);
+}
+
+:root[data-color-vision] .graph-node--selected.graph-node--earliest {
+  border-color: var(--accent);
+}
+
+:root[data-color-vision] .node-tag--start {
+  border-color: var(--cancelled);
+  background: transparent;
+  color: var(--text-2);
+}
+
+:root[data-color-vision] .state-panel--error {
+  border-color: var(--critical);
+  background: var(--surface);
+}
+
+:root[data-color-vision] .form-error,
+:root[data-color-vision] .search-bar__error {
+  color: var(--critical);
+}
+
+:root[data-color-vision] .search-bar:focus-within,
+:root[data-color-vision] .field input:focus {
+  box-shadow: 0 0 0 3px var(--accent-wash);
+}
+
+:root[data-color-vision] ::selection {
+  background: var(--accent-wash);
+}
+
 .display__option-label {
   color: var(--text);
   font-size: 12.5px;
