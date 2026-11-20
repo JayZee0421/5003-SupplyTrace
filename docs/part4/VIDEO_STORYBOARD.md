@@ -42,9 +42,9 @@ Every action is repeatable against the real API. Before recording, confirm the h
 
 ## Shot 6: Error and narrow states (optional, about 20 seconds)
 
-- Action: open `/orders/DOES-NOT-EXIST` to show the 404 explanation and retry; switch to 1280 width to show horizontal scrolling in the impact graph; switch to 768/512/375 width to show the stacked scenario table, the card layout of the latest-exceptions rows and single-column metrics.
-- Voice-over: loading, empty, 404/422/503/504 all have explicit states; 1920x1080 has no clipped text, and narrow layouts stack or scroll.
-- Screenshots: `notfound-1280.png`, `impact-1280.png`, `timeline-768.png`, `home-512.png`, `home-512-recent.png`, `home-375.png`
+- Action: open `/orders/DOES-NOT-EXIST` to show the 404 explanation and retry; switch to 1280 width to show horizontal scrolling in the impact graph; switch to 768/512/375 width to show the stacked scenario table, the card layout of the latest-exceptions rows and single-column metrics; open the top-right `Display` menu and toggle `Color-blind friendly` to show that status still keeps its icon and label.
+- Voice-over: loading, empty, 404/422/503/504 all have explicit states; 1920x1080 has no clipped text, and narrow layouts stack or scroll; the display menu provides a color-blind-safe palette, high contrast and reduced motion.
+- Screenshots: `notfound-1280.png`, `impact-1280.png`, `timeline-768.png`, `home-512.png`, `home-512-recent.png`, `home-375.png`, `display-menu-1280.png`, `colorblind-timeline-1920.png`
 
 ## Course video coverage checklist
 

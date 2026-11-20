@@ -141,6 +141,26 @@ export function SlashCircleIcon({ size = 16, className }: IconProps) {
   )
 }
 
+export function AccessibilityIcon({ size = 18, className }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="4.4" r="1.7" />
+      <path d="M4.8 8.6h14.4M12 8.6v5.1M12 13.7 8.2 21M12 13.7l3.8 7.3" />
+    </svg>
+  )
+}
+
 export function BoxIcon({ size = 28, className }: IconProps) {
   return (
     <svg {...svgProps(size)} className={className}>
