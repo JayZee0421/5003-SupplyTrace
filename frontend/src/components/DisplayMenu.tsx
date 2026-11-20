@@ -46,7 +46,7 @@ const OPTIONS: Array<{
   {
     key: 'colorBlind',
     label: 'Color-blind friendly',
-    hint: 'Blue/orange status palette; icons and text stay.',
+    hint: 'Blue/orange/magenta palette with distinct marker shapes.',
   },
   {
     key: 'highContrast',
@@ -136,6 +136,13 @@ export function DisplayMenu() {
               />
               <span className="display__option-label">{option.label}</span>
               <span className="display__option-hint">{option.hint}</span>
+              {option.key === 'colorBlind' ? (
+                <span className="display__preview" aria-hidden="true">
+                  <span className="display__swatch display__swatch--good" />
+                  <span className="display__swatch display__swatch--warning" />
+                  <span className="display__swatch display__swatch--critical" />
+                </span>
+              ) : null}
             </label>
           ))}
           <p className="display__note">

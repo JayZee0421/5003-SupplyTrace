@@ -31,11 +31,11 @@
 
 /* Display preferences applied from the header menu. */
 :root[data-color-blind='true'] {
-  --good: #009e73;
+  --good: #56b4e9;
   --warning: #e69f00;
   --serious: #d55e00;
   --critical: #cc79a7;
-  --info: #56b4e9;
+  --info: #009e73;
   --cancelled: #9aa0a6;
   --accent: #0072b2;
   --accent-strong: #56b4e9;
@@ -339,6 +339,70 @@ button {
   color: var(--muted);
   font-size: 11px;
   line-height: 1.4;
+}
+
+.display__preview {
+  display: flex;
+  grid-column: 2;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.display__swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.display__swatch--good {
+  background: var(--good);
+}
+
+.display__swatch--warning {
+  background: var(--warning);
+}
+
+.display__swatch--critical {
+  background: var(--critical);
+}
+
+:root[data-color-blind='true'] .display__swatch--warning {
+  border-radius: 1px;
+}
+
+:root[data-color-blind='true'] .display__swatch--critical {
+  border-radius: 1px;
+  transform: rotate(45deg);
+}
+
+:root[data-color-blind='true'] .timeline__rail--warning .timeline__dot,
+:root[data-color-blind='true'] .chain__dot--warning,
+:root[data-color-blind='true'] .status-dot--warning .status-dot__mark {
+  border-radius: 1px;
+}
+
+:root[data-color-blind='true'] .timeline__rail--critical .timeline__dot,
+:root[data-color-blind='true'] .status-dot--critical .status-dot__mark {
+  border-radius: 1px;
+  transform: rotate(45deg);
+}
+
+:root[data-color-blind='true'] .chain__dot--critical {
+  border-radius: 1px;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+:root[data-color-blind='true'] .timeline__rail--muted .timeline__dot,
+:root[data-color-blind='true'] .chain__dot--muted,
+:root[data-color-blind='true'] .status-dot--muted .status-dot__mark {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--cancelled);
+}
+
+:root[data-color-blind='true'] .timeline__rail--muted .timeline__dot {
+  box-shadow:
+    inset 0 0 0 2px var(--cancelled),
+    0 0 0 4px var(--page);
 }
 
 .display__note {
