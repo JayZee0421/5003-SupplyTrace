@@ -1,7 +1,5 @@
 import type { EdgeKind } from '../types'
 
-// Validated with the dataviz palette checker on the #0d1212 panel surface:
-// blue/orange pass the two-series chart checks; edges use blue/orange/teal with line styles.
 export const SERIES = {
   average: '#4f8cff',
   p90: '#d95926',

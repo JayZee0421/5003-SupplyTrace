@@ -87,9 +87,10 @@ Mock 模式只包含供应商延期路径（订单 `SO-SYN-000001` / `SO-SYN-000
 - 加载时保留旧画面（不闪骨架）；404/422/503/504 分别给出说明与重试入口。
 - 1920×1080 下列表、图表和 8 列影响图无文字截断；窄屏下时间线行、筛选表单和 metrics 条自动堆叠，最新异常表改为三行卡片式布局，场景表改为分行显示，影响图可横向滚动（容器可键盘聚焦）；375 宽度下导航五项完整显示，首页标题与预览不截断。
 - 窄屏最新异常表为每个单元格提供隐藏列名（Event / Order / Status / Time / Open），读屏不会丢失字段含义；首页同一订单的时间线请求在预览、demo readiness 和最新异常面板之间合并为一次。
+- 右上角 `Display` 菜单提供 `Color vision` 四档：`Standard`、`Red-green safe`（蓝/橙/品红）、`Blue-yellow safe`（绿/朱红/品红）、`Monochrome`（整页灰度 + 明度层级 + 圆/方/菱形/空心标记）；菜单内 `Status markers` 图例用颜色和文字标出 Normal/Warning/Failed/Completed/Cancelled，Monochrome 下同一图例显示对应形状。另有 `High contrast` 和 `Reduce motion`。偏好写入 localStorage，状态仍带图标与文字标签。
 - 根因页 Event context 的 Order / line 优先显示订单号（基准场景映射或 `?order=` 上下文），只有未知事件才退回内部 `#id`；从受影响订单打开导航时，Root cause / Impact 指向该场景的根因事件。
 - 影响图在每条订单 lane 的起始卡片上方标注订单号，并在面板说明中按自上而下列出订单，长图滚动时也能从起点识别每条链。
-- 最新异常表在订单号下显示客户、在时间下显示承诺日期，便于先按客户和承诺做分诊；耗时页主指标为 `Slowest P90`，平均值保留在副文案和图表中。
+- 最新异常表在订单号下显示客户、在时间下显示承诺日期，便于先按客户和承诺做分诊；耗时页主指标为 `Slowest P90`，平均值保留在副文案和图表中。P90 柱使用斜纹填充，Average 保持实心，颜色之外还有纹理可区分。
 - 导航以 `sessionStorage` 记住最近一组有效上下文（查看的订单、事件及其所属订单）；回到 Overview/Durations 后仍指向它，导航的 Root cause / Impact 也带 `?order=`。从事件进入某订单的时间线后，该订单的 Root cause / Impact 继续使用刚看过的事件，不会退回场景根事件；直接打开订单时由时间线发布该订单最新异常作为导航锚点。首次打开仍使用 demo 默认值。
 - 导航不绑定具体订单号或事件号：订单页锚点来自时间线响应，事件页来自 URL/接口；`DEMO_ORDER_NUMBERS`、场景映射和 `DEFAULT_*` 只是 `demo.ts` 里的演示配置。接入真实订单时，把服务端订单列表传给 `useRecentExceptions(orderNumbers)`，并替换这些默认值即可。事件/根因响应目前只有 `order_id`；若要让不带 `?order=` 的真实事件深链显示订单号，后端响应需补 `order_number`（或提供事件→订单查询）。
 - 界面文案、代码注释和属性文案全部使用英文；日期/数字输入使用英文文本框，不依赖浏览器本地化的原生控件文案。仓库 README 按团队习惯使用中文。
@@ -103,7 +104,7 @@ frontend/
     hooks/useApi.ts       # 可取消请求、重载时保留旧数据
     types.ts              # 与 backend/contracts.py 对齐的响应类型
     lib/format.ts         # UTC、小时、数字格式
-    lib/theme.ts          # 通过 dataviz 校验的系列色与边类型色
+    lib/theme.ts          # 系列色与边类型色
     components/           # 布局、状态、时间线卡、因果链、影响图、耗时图
     pages/                # 总览、时间线、根因、影响、耗时、404
     mocks/                # docs/part3/examples/mock 的副本
@@ -119,6 +120,6 @@ frontend/
 - `npm test` 通过：8 个测试文件、43 项测试（ID 解析、日期解析、阶段统计、图深度/选中节点、演示场景与 `benchmark_cases.json` 对齐、最新异常排序、时间线倒序、导航上下文解析与持久化、时间线请求合并与单调用方取消、网络/503 重试与 404 不重试）。
 - 四个视图与供应商延期路径已在本机真实 FastAPI + PostgreSQL 上逐页截图检查（1920×1080、1280、768、512、375 宽度）；另外两个基准场景的接口返回值经 API 验证。
 - 在 100,000 事件库（seed 5003，10,989 订单）上复测：基准场景的订单时间线、根因链、影响节点数和受影响订单与 57 事件库完全一致；耗时页显示 10,989 个样本（P90 15.43 h / 平均 13.06 h）；随机订单 `SO-SYN-010989` 和随机事件 `#38546` 可正常深链；1280/375 无控制台错误或横向溢出。
-- 路由级代码分割：主包 290.4 kB（gzip 91.5 kB），耗时页 378.1 kB（gzip 108.9 kB，含 Recharts）。
+- 路由级代码分割：主包 294.9 kB（gzip 92.7 kB），耗时页 378.6 kB（gzip 109.1 kB，含 Recharts）。
 - 数据 GET 请求对网络错误和 502/503/504 自动重试一次（约 300 ms 后）；懒加载 chunk 失效时 `ErrorBoundary` 会自动刷新一次，避免开发期 HMR 或部署切换留下错误页。503/504 错误页已用受控响应拦截截图验证，错误码与 HTTP 状态均来自统一信封。
 - API 契约与错误码以 [docs/part3/API_CONTRACT.md](../docs/part3/API_CONTRACT.md) 为准；字段未在前端猜测或改名。

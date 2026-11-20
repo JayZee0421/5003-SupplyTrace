@@ -10,6 +10,7 @@ import {
 } from '../demo'
 import { useOrderPage } from '../context/OrderPageContext'
 import { resolveNavigation, resolveStoredContext, type NavContext } from '../lib/nav'
+import { DisplayMenu } from './DisplayMenu'
 import { ErrorBoundary } from './ErrorBoundary'
 import { LogoIcon } from './icons'
 
@@ -207,7 +208,10 @@ export function Layout() {
               </Link>
             ))}
           </nav>
-          <HealthPill />
+          <div className="header-tools">
+            <HealthPill />
+            <DisplayMenu />
+          </div>
         </div>
       </header>
       {MOCK_MODE ? (

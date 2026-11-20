@@ -8,7 +8,6 @@ import type { EventRecord } from '../types'
 import { ArrowRightIcon } from './icons'
 import { statusTone } from './StatusBadge'
 
-/** Live preview of a demo scenario; deliberately not the latest exception. */
 export function TracePreview({ scenario }: { scenario: DemoScenario }) {
   const state = useApi(`order-preview:${scenario.timelineOrder}`, (signal) =>
     fetchTimeline(scenario.timelineOrder, signal),

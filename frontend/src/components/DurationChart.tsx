@@ -11,6 +11,10 @@ import type { Stage } from '../types'
 import { formatHours, formatNumber } from '../lib/format'
 import { SERIES } from '../lib/theme'
 
+const P90_PATTERN = 'p90-stripes'
+const P90_HATCH =
+  'repeating-linear-gradient(135deg, transparent 0 2px, rgba(8, 9, 10, 0.5) 2px 4px)'
+
 interface TooltipItem {
   value?: number | null
   name?: string
@@ -72,7 +76,14 @@ function DurationTooltip({ active, label, payload }: DurationTooltipProps) {
       <div className="chart-tooltip__rows">
         {payload.map((item) => (
           <div className="chart-tooltip__row" key={String(item.dataKey)}>
-            <span className="chart-tooltip__key" style={{ background: item.color }} />
+            <span
+              className="chart-tooltip__key"
+              style={
+                item.dataKey === 'p90'
+                  ? { backgroundColor: SERIES.p90, backgroundImage: P90_HATCH }
+                  : { background: item.color }
+              }
+            />
             <span className="chart-tooltip__value">{formatHours(item.value ?? null)}</span>
             <span className="chart-tooltip__name">{item.name}</span>
           </div>
@@ -102,7 +113,10 @@ export function DurationChart({ stages }: { stages: Stage[] }) {
           Average hours
         </span>
         <span className="chart-legend__item">
-          <span className="chart-legend__swatch" style={{ background: SERIES.p90 }} />
+          <span
+            className="chart-legend__swatch"
+            style={{ backgroundColor: SERIES.p90, backgroundImage: P90_HATCH }}
+          />
           P90 hours
         </span>
       </div>
@@ -115,6 +129,18 @@ export function DurationChart({ stages }: { stages: Stage[] }) {
             barGap={2}
             barCategoryGap="26%"
           >
+            <defs>
+              <pattern
+                id={P90_PATTERN}
+                width="6"
+                height="6"
+                patternUnits="userSpaceOnUse"
+                patternTransform="rotate(45)"
+              >
+                <rect width="6" height="6" fill={SERIES.p90} />
+                <rect width="2" height="6" fill="rgba(8, 9, 10, 0.5)" />
+              </pattern>
+            </defs>
             <CartesianGrid horizontal={false} stroke="#232527" strokeWidth={1} />
             <XAxis
               type="number"
@@ -148,7 +174,7 @@ export function DurationChart({ stages }: { stages: Stage[] }) {
             <Bar
               dataKey="p90"
               name="P90"
-              fill={SERIES.p90}
+              fill={`url(#${P90_PATTERN})`}
               barSize={10}
               radius={[0, 4, 4, 0]}
               isAnimationActive={false}

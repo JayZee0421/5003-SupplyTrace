@@ -59,7 +59,6 @@ export function HomePage() {
             )}
           </div>
         </div>
-        {/* Curated example: latest exceptions live in the hero link and table below. */}
         <TracePreview scenario={primaryScenario} />
       </section>
 
