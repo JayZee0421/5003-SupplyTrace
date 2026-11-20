@@ -83,7 +83,7 @@ function applyPreferences(preferences: DisplayPreferences) {
   set('data-reduce-motion', preferences.reduceMotion)
 }
 
-const MONO_MARKERS: Array<{ tone: string; label: string }> = [
+const STATUS_MARKERS: Array<{ tone: string; label: string }> = [
   { tone: 'good', label: 'Normal' },
   { tone: 'warning', label: 'Warning' },
   { tone: 'critical', label: 'Failed' },
@@ -207,29 +207,22 @@ export function DisplayMenu() {
               ))}
             </select>
             <span className="display__option-hint">{vision.hint}</span>
-            <span className="display__preview" aria-hidden="true">
-              <span className="display__swatch display__swatch--good" />
-              <span className="display__swatch display__swatch--warning" />
-              <span className="display__swatch display__swatch--critical" />
-            </span>
           </div>
 
-          {preferences.colorVision === 'monochrome' ? (
-            <div className="display__legend" aria-label="Monochrome marker shapes">
-              <p className="display__legend-title">Marker shapes</p>
-              <ul>
-                {MONO_MARKERS.map((marker) => (
-                  <li key={marker.tone}>
-                    <span
-                      className={`display__marker display__marker--${marker.tone}`}
-                      aria-hidden="true"
-                    />
-                    {marker.label}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
+          <div className="display__legend" aria-label="Status marker legend">
+            <p className="display__legend-title">Status markers</p>
+            <ul>
+              {STATUS_MARKERS.map((marker) => (
+                <li key={marker.tone}>
+                  <span
+                    className={`display__marker display__marker--${marker.tone}`}
+                    aria-hidden="true"
+                  />
+                  {marker.label}
+                </li>
+              ))}
+            </ul>
+          </div>
 
           {CHECKBOX_OPTIONS.map((option) => (
             <label className="display__option" key={option.key}>
