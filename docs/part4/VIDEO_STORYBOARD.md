@@ -35,7 +35,7 @@ Every action is repeatable against the real API. Before recording, confirm the h
 ## Shot 5: Stage durations (about 30 seconds)
 
 - URL: `/durations`
-- Action: with the 57-event benchmark dataset loaded, show the metric strip (8/8 stages, 6 lines sampled, slowest P90 50.88 h for "Dispatch to arrival" with average 24.15 h); hover "Dispatch to arrival" for the sample count; enter `SO-SYN-000001` in Order number and click Apply to show the URL filter; click Reset.
+- Action: with the 57-event benchmark dataset loaded, show the metric strip (8/8 stages, 6 lines sampled, slowest P90 50.88 h for "Dispatch to arrival" with average 24.15 h); point out the striped P90 bars versus solid Average bars; hover "Dispatch to arrival" for the sample count; enter `SO-SYN-000001` in Order number and click Apply to show the URL filter; click Reset.
 - Note: the 100k dataset keeps the same scenario event ids and impact/root results, but its duration aggregates differ (10,989 samples; P90 15.43 h / average 13.06 h at seed 5003). State the dataset in the voice-over and use the values shown on screen; do not read the 57-event numbers over a 100k-dataset recording.
 - Voice-over: P90 uses `percentile_cont(0.9)` with linear interpolation; filters live in the URL and can be deep-linked.
 - Screenshot: `durations-1920.png`
