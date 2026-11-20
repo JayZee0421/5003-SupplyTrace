@@ -366,45 +366,6 @@ button {
   background: var(--critical);
 }
 
-:root[data-color-blind='true'] .display__swatch--warning {
-  border-radius: 1px;
-}
-
-:root[data-color-blind='true'] .display__swatch--critical {
-  border-radius: 1px;
-  transform: rotate(45deg);
-}
-
-:root[data-color-blind='true'] .timeline__rail--warning .timeline__dot,
-:root[data-color-blind='true'] .chain__dot--warning,
-:root[data-color-blind='true'] .status-dot--warning .status-dot__mark {
-  border-radius: 1px;
-}
-
-:root[data-color-blind='true'] .timeline__rail--critical .timeline__dot,
-:root[data-color-blind='true'] .status-dot--critical .status-dot__mark {
-  border-radius: 1px;
-  transform: rotate(45deg);
-}
-
-:root[data-color-blind='true'] .chain__dot--critical {
-  border-radius: 1px;
-  transform: translateX(-50%) rotate(45deg);
-}
-
-:root[data-color-blind='true'] .timeline__rail--muted .timeline__dot,
-:root[data-color-blind='true'] .chain__dot--muted,
-:root[data-color-blind='true'] .status-dot--muted .status-dot__mark {
-  background: transparent;
-  box-shadow: inset 0 0 0 2px var(--cancelled);
-}
-
-:root[data-color-blind='true'] .timeline__rail--muted .timeline__dot {
-  box-shadow:
-    inset 0 0 0 2px var(--cancelled),
-    0 0 0 4px var(--page);
-}
-
 .display__note {
   margin-top: 8px;
   padding-top: 10px;

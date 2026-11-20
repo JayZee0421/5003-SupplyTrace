@@ -46,7 +46,7 @@ const OPTIONS: Array<{
   {
     key: 'colorBlind',
     label: 'Color-blind friendly',
-    hint: 'Blue/orange/magenta palette with distinct marker shapes.',
+    hint: 'Red-green safe blue/orange/magenta palette; icons and text stay.',
   },
   {
     key: 'highContrast',
