@@ -87,7 +87,7 @@ Mock 模式只包含供应商延期路径（订单 `SO-SYN-000001` / `SO-SYN-000
 - 加载时保留旧画面（不闪骨架）；404/422/503/504 分别给出说明与重试入口。
 - 1920×1080 下列表、图表和 8 列影响图无文字截断；窄屏下时间线行、筛选表单和 metrics 条自动堆叠，最新异常表改为三行卡片式布局，场景表改为分行显示，影响图可横向滚动（容器可键盘聚焦）；375 宽度下导航五项完整显示，首页标题与预览不截断。
 - 窄屏最新异常表为每个单元格提供隐藏列名（Event / Order / Status / Time / Open），读屏不会丢失字段含义；首页同一订单的时间线请求在预览、demo readiness 和最新异常面板之间合并为一次。
-- 右上角 `Display` 菜单提供 `Color vision` 四档：`Standard`、`Red-green safe`（蓝/橙/品红）、`Blue-yellow safe`（绿/朱红/品红）、`Monochrome`（明度层级 + 圆/方/菱形/空心标记）；菜单内 `Status markers` 图例用颜色和文字标出 Normal/Warning/Failed/Completed/Cancelled，Monochrome 下同一图例显示对应形状。另有 `High contrast` 和 `Reduce motion`。偏好写入 localStorage，状态仍带图标与文字标签。
+- 右上角 `Display` 菜单提供 `Color vision` 四档：`Standard`、`Red-green safe`（蓝/橙/品红）、`Blue-yellow safe`（绿/朱红/品红）、`Monochrome`（整页灰度 + 明度层级 + 圆/方/菱形/空心标记）；菜单内 `Status markers` 图例用颜色和文字标出 Normal/Warning/Failed/Completed/Cancelled，Monochrome 下同一图例显示对应形状。另有 `High contrast` 和 `Reduce motion`。偏好写入 localStorage，状态仍带图标与文字标签。
 - 根因页 Event context 的 Order / line 优先显示订单号（基准场景映射或 `?order=` 上下文），只有未知事件才退回内部 `#id`；从受影响订单打开导航时，Root cause / Impact 指向该场景的根因事件。
 - 影响图在每条订单 lane 的起始卡片上方标注订单号，并在面板说明中按自上而下列出订单，长图滚动时也能从起点识别每条链。
 - 最新异常表在订单号下显示客户、在时间下显示承诺日期，便于先按客户和承诺做分诊；耗时页主指标为 `Slowest P90`，平均值保留在副文案和图表中。

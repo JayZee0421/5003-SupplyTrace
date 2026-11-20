@@ -66,10 +66,24 @@
   --accent-wash: rgba(255, 255, 255, 0.12);
 }
 
-:root[data-color-vision='monochrome'] .chart-frame,
-:root[data-color-vision='monochrome'] .graph-canvas,
-:root[data-color-vision='monochrome'] .chain-wrap {
+:root[data-color-vision='monochrome'] body {
   filter: grayscale(1);
+}
+
+:root[data-color-vision='monochrome'] .preview-step--warning .preview-step__dot {
+  border-radius: 1px;
+}
+
+:root[data-color-vision='monochrome'] .preview-step--critical .preview-step__dot {
+  border-radius: 1px;
+  transform: rotate(45deg);
+}
+
+:root[data-color-vision='monochrome'] .preview-step--info .preview-step__dot {
+  background: transparent;
+  box-shadow:
+    inset 0 0 0 2px var(--accent),
+    0 0 0 4px var(--surface);
 }
 
 /* Without hue, monochrome mode also separates status markers by shape. */
@@ -1499,6 +1513,10 @@ button {
 
 .preview-step--info {
   --preview-tone: var(--accent);
+}
+
+.preview-step--critical {
+  --preview-tone: var(--critical);
 }
 
 .preview-step__body {

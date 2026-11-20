@@ -48,7 +48,7 @@ Precision Dark：中性石墨表面、发丝边框、单一蓝色强调色；Nor
 - 窄屏卡片为每个单元格保留隐藏列名（Event / Order / Status / Time / Open），读屏仍能识别字段；首页预览、demo readiness 与最新异常面板共用同一次时间线请求（六个订单共六次请求）。
 - 已在 100,000 事件库（seed 5003，10,989 订单）复测四个视图：三个基准场景的订单时间线、根因链和影响订单与 57 事件库完全一致；耗时页显示 10,989 个样本；随机订单和随机事件可深链；1280/375 无溢出或控制台错误。
 - 影响图在每条订单 lane 的起始卡片上方标注订单号，并按自上而下的顺序在说明中列出，避免把并行的订单链误读为重复事件。
-- 顶栏 `Display` 菜单提供 `Color vision` 四档（Standard / Red-green safe / Blue-yellow safe / Monochrome）、高对比度和减少动效，偏好保存在本地；菜单内 `Status markers` 图例用颜色和文字标出各状态，Monochrome 下同一图例显示圆/方/菱形/空心标记；状态徽章和圆点始终带图标与文字，不依赖单一颜色。
+- 顶栏 `Display` 菜单提供 `Color vision` 四档（Standard / Red-green safe / Blue-yellow safe / Monochrome）、高对比度和减少动效，偏好保存在本地；菜单内 `Status markers` 图例用颜色和文字标出各状态，Monochrome 下整页转灰度，同一图例显示圆/方/菱形/空心标记；状态徽章和圆点始终带图标与文字，不依赖单一颜色。
 - 从受影响订单进入导航时，Root cause / Impact 指向该场景的根因事件（例如订单 2 指向 `#3`，不再指向订单 1 的 `#10`）；根因页 Event context 显示订单号而非只有内部 `#id`。
 - 最新异常表补充客户与承诺日期（订单号/时间下方副行），耗时页主指标改为 `Slowest P90`，平均值保留在副文案和图表中。
 - 导航以 sessionStorage 记住最近一组有效上下文（订单、事件及其所属订单）；从事件页回到 Overview 后，Timeline / Root cause / Impact 不再跳回 demo 默认值，事件导航链接也继续带 `?order=`。从事件进入订单时间线后，该订单的 Root cause / Impact 保持刚看过的事件；直接打开订单时由时间线发布该订单最新异常作为锚点，不会落到另一个订单的场景根事件。
