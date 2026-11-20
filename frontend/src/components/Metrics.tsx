@@ -6,7 +6,6 @@ export interface Metric {
   hint?: ReactNode
 }
 
-/** A compact ledger strip for page facts, not a row of cards. */
 export function Metrics({ items }: { items: Metric[] }) {
   return (
     <dl className="metrics">
