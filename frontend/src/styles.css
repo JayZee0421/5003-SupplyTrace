@@ -425,6 +425,63 @@ button {
   margin-top: 6px;
 }
 
+.display__legend {
+  padding: 9px 0;
+  border-top: 1px solid var(--border-soft);
+}
+
+.display__legend-title {
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.display__legend ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 10px;
+}
+
+.display__legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-2);
+  font-size: 11px;
+}
+
+.display__marker {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+}
+
+.display__marker--good {
+  border-radius: 50%;
+  background: var(--good);
+}
+
+.display__marker--warning {
+  border-radius: 1px;
+  background: var(--warning);
+}
+
+.display__marker--critical {
+  border-radius: 1px;
+  background: var(--critical);
+  transform: rotate(45deg);
+}
+
+.display__marker--info {
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.display__marker--muted {
+  border-radius: 1px;
+  box-shadow: inset 0 0 0 2px var(--cancelled);
+}
+
 .display__option {
   display: grid;
   grid-template-columns: 16px minmax(0, 1fr);
