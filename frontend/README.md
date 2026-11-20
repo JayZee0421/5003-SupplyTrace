@@ -104,7 +104,7 @@ frontend/
     hooks/useApi.ts       # 可取消请求、重载时保留旧数据
     types.ts              # 与 backend/contracts.py 对齐的响应类型
     lib/format.ts         # UTC、小时、数字格式
-    lib/theme.ts          # 通过 dataviz 校验的系列色与边类型色
+    lib/theme.ts          # 系列色与边类型色
     components/           # 布局、状态、时间线卡、因果链、影响图、耗时图
     pages/                # 总览、时间线、根因、影响、耗时、404
     mocks/                # docs/part3/examples/mock 的副本
