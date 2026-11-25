@@ -51,6 +51,7 @@ describe('resolveNavigation', () => {
   it('uses the demo fallbacks on a first visit', () => {
     expect(navigate({})).toEqual({
       order: DEFAULT_ORDER,
+      orderKnown: true,
       rootCauseEvent: DEFAULT_TRACE_EVENT,
       impactEvent: DEFAULT_IMPACT_EVENT,
       rootCauseHref: `/events/${DEFAULT_TRACE_EVENT}/root-cause`,
@@ -148,6 +149,7 @@ describe('resolveNavigation', () => {
     const result = navigate({ currentEventId: 19 })
 
     expect(result.order).toBe(DEFAULT_ORDER)
+    expect(result.orderKnown).toBe(false)
     expect(result.rootCauseEvent).toBe(19)
     expect(result.impactEvent).toBe(19)
     expect(result.rootCauseHref).toBe('/events/19/root-cause')
@@ -165,6 +167,7 @@ describe('resolveNavigation', () => {
     })
 
     expect(result.order).toBe('SO-SYN-000002')
+    expect(result.orderKnown).toBe(true)
     expect(result.rootCauseHref).toBe('/events/19/root-cause?order=SO-SYN-000002')
     expect(result.impactHref).toBe('/events/19/impact?order=SO-SYN-000002')
   })

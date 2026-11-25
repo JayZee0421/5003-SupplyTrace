@@ -21,6 +21,7 @@ export interface NavigationInput {
 
 export interface NavigationResult {
   order: string
+  orderKnown: boolean
   rootCauseEvent: number
   impactEvent: number
   rootCauseHref: string
@@ -115,8 +116,16 @@ export function resolveNavigation(input: NavigationInput): NavigationResult {
     return orderNumber ? `?order=${encodeURIComponent(orderNumber)}` : ''
   }
 
+  const orderKnown =
+    currentEventId === null ||
+    currentOrder !== null ||
+    contextOrder !== null ||
+    scenario !== undefined ||
+    storedForEvent !== null
+
   return {
     order,
+    orderKnown,
     rootCauseEvent,
     impactEvent,
     rootCauseHref: `/events/${rootCauseEvent}/root-cause${eventQuery(rootCauseEvent)}`,

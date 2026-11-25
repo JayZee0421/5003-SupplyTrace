@@ -7,6 +7,7 @@ import { formatUtc, pluralize } from '../lib/format'
 import { graphDepth, selectedNode } from '../lib/graph'
 import { parsePositiveInt } from '../lib/ids'
 import { lookupOrderNumber } from '../lib/orderLookup'
+import type { GraphNode } from '../types'
 import { EdgeLegend, RootCauseChain } from '../components/RootCauseChain'
 import { EmptyState } from '../components/EmptyState'
 import { ErrorState } from '../components/ErrorState'
@@ -109,6 +110,10 @@ export function RootCausePage() {
     (selected && selected.order_id !== null ? `#${selected.order_id}` : '—')
   const navigationOrder = scenarioOrder ?? contextOrder ?? resolvedOrderNumber
   const orderQuery = navigationOrder ? `?order=${encodeURIComponent(navigationOrder)}` : ''
+  // The order context belongs to the selected event. A chain can contain
+  // events from other orders, so do not attach it blindly to every node.
+  const queryForNode = (node: GraphNode | undefined) =>
+    node && selectedOrderId !== null && node.order_id === selectedOrderId ? orderQuery : ''
   const orderLine = selected
     ? `${orderLabel} / ${
         selected.order_line_id !== null ? `#${selected.order_line_id}` : '—'
@@ -162,7 +167,7 @@ export function RootCausePage() {
               {
                 label: 'Earliest exception',
                 value: earliest ? (
-                  <Link to={`/events/${earliest.event_id}/root-cause${orderQuery}`}>
+                  <Link to={`/events/${earliest.event_id}/root-cause${queryForNode(earliest)}`}>
                     #{earliest.event_id}
                   </Link>
                 ) : (
@@ -173,7 +178,7 @@ export function RootCausePage() {
               {
                 label: 'Chain start',
                 value: chainStart ? (
-                  <Link to={`/events/${chainStart.event_id}/root-cause${orderQuery}`}>
+                  <Link to={`/events/${chainStart.event_id}/root-cause${queryForNode(chainStart)}`}>
                     #{chainStart.event_id}
                   </Link>
                 ) : (
@@ -205,7 +210,11 @@ export function RootCausePage() {
                   </div>
                   <EdgeLegend edges={data.edges} />
                 </header>
-                <RootCauseChain data={data} orderQuery={orderQuery} />
+                <RootCauseChain
+                  data={data}
+                  orderQuery={orderQuery}
+                  selectedOrderId={selectedOrderId}
+                />
                 {data.nodes.length === 1 ? (
                   <p className="panel__note">
                     No upstream cause is recorded for this event. It is the start of its own chain.
@@ -245,7 +254,9 @@ export function RootCausePage() {
                   {impactTarget ? (
                     <Link
                       className="btn btn--primary btn--block"
-                      to={`/events/${impactTarget}/impact${orderQuery}`}
+                      to={`/events/${impactTarget}/impact${
+                        queryForNode(earliest ?? selected)
+                      }`}
                     >
                       View impact of event #{impactTarget}
                       <ArrowRightIcon size={15} />

@@ -176,7 +176,9 @@ export function Layout() {
   const navigation = [
     { to: '/', label: 'Overview', active: activePath === '/' },
     {
-      to: `/orders/${encodeURIComponent(navOrder)}`,
+      to: resolvedNavigation.orderKnown
+        ? `/orders/${encodeURIComponent(navOrder)}`
+        : null,
       label: 'Timeline',
       active: activePath.startsWith('/orders/'),
     },
@@ -202,16 +204,27 @@ export function Layout() {
             <span className="brand__name">SupplyTrace</span>
           </Link>
           <nav className="nav" aria-label="Main views">
-            {navigation.map((item) => (
-              <Link
-                key={item.label}
-                to={item.to}
-                className={item.active ? 'nav__link nav__link--active' : 'nav__link'}
-                aria-current={item.active ? 'page' : undefined}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navigation.map((item) =>
+              item.to ? (
+                <Link
+                  key={item.label}
+                  to={item.to}
+                  className={item.active ? 'nav__link nav__link--active' : 'nav__link'}
+                  aria-current={item.active ? 'page' : undefined}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <span
+                  key={item.label}
+                  className="nav__link nav__link--disabled"
+                  aria-disabled="true"
+                  title="Order number unavailable for this event"
+                >
+                  {item.label}
+                </span>
+              ),
+            )}
           </nav>
           <div className="header-tools">
             <HealthPill />
