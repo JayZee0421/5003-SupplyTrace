@@ -66,7 +66,12 @@ export function TracePreview({ scenario }: { scenario: DemoScenario }) {
                   className={`preview-step preview-step--${statusTone(step.status)}`}
                   key={step.event_id}
                 >
-                  <span className="preview-step__dot" aria-hidden="true" />
+                  <span
+                    className="preview-step__dot"
+                    role="img"
+                    aria-label={`Status: ${step.status}`}
+                    title={`Status: ${step.status}`}
+                  />
                   <div className="preview-step__body">
                     <div className="preview-step__top">
                       <span className="mono">

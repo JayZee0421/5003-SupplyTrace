@@ -52,10 +52,15 @@ export function resolveNavigation(input: NavigationInput): NavigationResult {
   const orderPageEvent =
     currentOrder !== null && orderPageOrder === currentOrder ? orderPageEventId : null
 
+  const storedForEvent =
+    currentEventId !== null && lastContext?.eventId === currentEventId
+      ? lastContext.order
+      : null
   const order =
     currentOrder ??
     contextOrder ??
     scenario?.timelineOrder ??
+    storedForEvent ??
     (currentEventId === null ? fallbackOrder : null) ??
     defaultOrder
 
@@ -80,6 +85,10 @@ export function resolveNavigation(input: NavigationInput): NavigationResult {
       ? fallbackEvent ?? defaultImpactEvent
       : defaultImpactEvent)
 
+  const hasOrderAnchor =
+    currentOrder !== null &&
+    (scenario !== undefined || lastForOrder?.eventId != null || orderPageEvent !== null)
+
   const eventOrderFor = (eventId: number): string | null => {
     if (eventId === currentEventId) {
       return (
@@ -88,7 +97,7 @@ export function resolveNavigation(input: NavigationInput): NavigationResult {
         (lastContext?.eventId === eventId ? lastContext.order : null)
       )
     }
-    if (currentOrder !== null) return currentOrder
+    if (currentOrder !== null) return hasOrderAnchor ? currentOrder : null
     if (lastContext?.eventId === eventId) return lastContext.order
     if (
       scenario &&
@@ -110,6 +119,35 @@ export function resolveNavigation(input: NavigationInput): NavigationResult {
     impactEvent,
     rootCauseHref: `/events/${rootCauseEvent}/root-cause${eventQuery(rootCauseEvent)}`,
     impactHref: `/events/${impactEvent}/impact${eventQuery(impactEvent)}`,
+  }
+}
+
+export interface PathContext {
+  eventId: number | null
+  order: string | null
+}
+
+function decodeSegment(value: string): string {
+  try {
+    return decodeURIComponent(value)
+  } catch {
+    return value
+  }
+}
+
+/**
+ * Parses the header's view context from the raw pathname. React Router matches
+ * trailing slashes and paths case-insensitively, so the header must accept the
+ * same forms and must not throw on a malformed percent escape.
+ */
+export function parsePathContext(pathname: string): PathContext {
+  const path = pathname.replace(/\/+$/, '') || '/'
+  const eventMatch = path.match(/^\/events\/(\d+)\/(?:root-cause|impact)$/i)
+  const orderMatch = path.match(/^\/orders\/([^/]+)$/i)
+
+  return {
+    eventId: eventMatch ? Number(eventMatch[1]) : null,
+    order: orderMatch ? decodeSegment(orderMatch[1]) : null,
   }
 }
 

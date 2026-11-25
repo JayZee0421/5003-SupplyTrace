@@ -61,7 +61,7 @@ export function RootCausePage() {
     scenarioOrder ??
     contextOrder ??
     (selected && selected.order_id !== null ? `#${selected.order_id}` : '—')
-  const navigationOrder = contextOrder ?? scenarioOrder
+  const navigationOrder = scenarioOrder ?? contextOrder
   const orderQuery = navigationOrder ? `?order=${encodeURIComponent(navigationOrder)}` : ''
   const orderLine = selected
     ? `${orderLabel} / ${
@@ -84,7 +84,13 @@ export function RootCausePage() {
           kind="event"
           initialValue={eventId !== null ? String(eventId) : ''}
           buttonLabel="Trace"
-          onSearch={(value) => navigate(`/events/${value}/root-cause${orderQuery}`)}
+          onSearch={(value) =>
+            navigate(
+              `/events/${value}/root-cause${
+                eventId !== null && value === String(eventId) ? orderQuery : ''
+              }`,
+            )
+          }
         />
       </header>
 
@@ -161,7 +167,10 @@ export function RootCausePage() {
                 ) : data.earliest_exception_event_id === data.selected_event_id ? (
                   <p className="panel__note">
                     No earlier WARNING or FAILED event exists in this chain. The selected event is
-                    the earliest exception and the root of its own chain.
+                    the earliest exception
+                    {data.chain_start_event_id === data.selected_event_id
+                      ? ' and the chain start.'
+                      : ', but earlier non-exception causes still precede it.'}
                   </p>
                 ) : null}
                 <p className="panel__note">
