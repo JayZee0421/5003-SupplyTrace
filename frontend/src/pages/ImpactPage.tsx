@@ -14,13 +14,26 @@ import { Loading } from '../components/Loading'
 import { Metrics } from '../components/Metrics'
 import { SearchBar } from '../components/SearchBar'
 import { ArrowRightIcon } from '../components/icons'
+import type { Impact } from '../types'
+
+function orderLaneNote(orders: Impact['orders']): string {
+  if (orders.length > 1) {
+    return ` Order labels mark the first card of each affected order: ${orders
+      .map((order) => order.order_number)
+      .join(', ')}.`
+  }
+  if (orders.length === 1) {
+    return ` The row follows affected order ${orders[0].order_number}.`
+  }
+  return ''
+}
 
 export function ImpactPage() {
   const { eventId: eventIdParam = '' } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
   const eventId = parsePositiveInt(eventIdParam)
-  const contextOrder = new URLSearchParams(location.search).get('order')
+  const contextOrder = new URLSearchParams(location.search).get('order') || null
   const orderQuery = contextOrder ? `?order=${encodeURIComponent(contextOrder)}` : ''
 
   const state = useApi(
@@ -119,13 +132,7 @@ export function ImpactPage() {
                   <h2>Propagation graph</h2>
                   <p>
                     Selected event on the left; each column is one more hop downstream.
-                    {data.orders.length > 1
-                      ? ` Order labels mark the first card of each affected order: ${data.orders
-                          .map((order) => order.order_number)
-                          .join(', ')}.`
-                      : data.orders.length === 1
-                        ? ` The row follows affected order ${data.orders[0].order_number}.`
-                        : ''}
+                    {orderLaneNote(data.orders)}
                   </p>
                 </div>
                 <EdgeLegend edges={data.edges} />

@@ -31,7 +31,7 @@ export function RootCausePage() {
   const navigate = useNavigate()
   const location = useLocation()
   const eventId = parsePositiveInt(eventIdParam)
-  const contextOrder = new URLSearchParams(location.search).get('order')
+  const contextOrder = new URLSearchParams(location.search).get('order') || null
 
   const state = useApi(
     `root-cause:${eventId ?? `invalid:${eventIdParam}`}`,
