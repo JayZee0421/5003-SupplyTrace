@@ -85,9 +85,11 @@ export function resolveNavigation(input: NavigationInput): NavigationResult {
       ? fallbackEvent ?? defaultImpactEvent
       : defaultImpactEvent)
 
+  const hasStoredEvent =
+    lastForOrder !== null && lastForOrder.eventId !== null
   const hasOrderAnchor =
     currentOrder !== null &&
-    (scenario !== undefined || lastForOrder?.eventId != null || orderPageEvent !== null)
+    (scenario !== undefined || hasStoredEvent || orderPageEvent !== null)
 
   const eventOrderFor = (eventId: number): string | null => {
     if (eventId === currentEventId) {
