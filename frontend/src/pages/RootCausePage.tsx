@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ApiError, fetchRootCause } from '../api/client'
 import { DEMO_SCENARIOS } from '../demo'
@@ -6,6 +6,7 @@ import { useApi } from '../hooks/useApi'
 import { formatUtc, pluralize } from '../lib/format'
 import { graphDepth, selectedNode } from '../lib/graph'
 import { parsePositiveInt } from '../lib/ids'
+import { lookupOrderNumber } from '../lib/orderLookup'
 import { EdgeLegend, RootCauseChain } from '../components/RootCauseChain'
 import { EmptyState } from '../components/EmptyState'
 import { ErrorState } from '../components/ErrorState'
@@ -57,11 +58,56 @@ export function RootCausePage() {
       scenario.rootEventId === selected?.event_id ||
       scenario.traceFromEventId === selected?.event_id,
   )?.timelineOrder
+  const selectedOrderId = selected?.order_id ?? null
+  const [resolvedOrder, setResolvedOrder] = useState<{
+    eventId: number
+    order: string
+  } | null>(null)
+  const resolvedOrderNumber =
+    resolvedOrder?.eventId === eventId ? resolvedOrder.order : null
+
+  useEffect(() => {
+    if (
+      eventId === null ||
+      contextOrder !== null ||
+      scenarioOrder !== undefined ||
+      selectedOrderId === null
+    ) {
+      return
+    }
+
+    const controller = new AbortController()
+    lookupOrderNumber(eventId, selectedOrderId, controller.signal)
+      .then((order) => {
+        if (order) setResolvedOrder({ eventId, order })
+      })
+      .catch(() => {
+        // Keep the #order_id fallback when the lookup is unavailable.
+      })
+
+    return () => controller.abort()
+  }, [eventId, contextOrder, scenarioOrder, selectedOrderId])
+
+  useEffect(() => {
+    if (!resolvedOrderNumber || contextOrder !== null || scenarioOrder !== undefined) return
+    const next = new URLSearchParams(location.search)
+    next.set('order', resolvedOrderNumber)
+    navigate(`${location.pathname}?${next.toString()}`, { replace: true })
+  }, [
+    resolvedOrderNumber,
+    contextOrder,
+    scenarioOrder,
+    location.pathname,
+    location.search,
+    navigate,
+  ])
+
   const orderLabel =
     scenarioOrder ??
     contextOrder ??
+    resolvedOrderNumber ??
     (selected && selected.order_id !== null ? `#${selected.order_id}` : '—')
-  const navigationOrder = scenarioOrder ?? contextOrder
+  const navigationOrder = scenarioOrder ?? contextOrder ?? resolvedOrderNumber
   const orderQuery = navigationOrder ? `?order=${encodeURIComponent(navigationOrder)}` : ''
   const orderLine = selected
     ? `${orderLabel} / ${
