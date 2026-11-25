@@ -9,7 +9,12 @@ import {
   DEFAULT_TRACE_EVENT,
 } from '../demo'
 import { useOrderPage } from '../context/OrderPageContext'
-import { resolveNavigation, resolveStoredContext, type NavContext } from '../lib/nav'
+import {
+  parsePathContext,
+  resolveNavigation,
+  resolveStoredContext,
+  type NavContext,
+} from '../lib/nav'
 import { DisplayMenu } from './DisplayMenu'
 import { ErrorBoundary } from './ErrorBoundary'
 import { LogoIcon } from './icons'
@@ -112,10 +117,9 @@ export function Layout() {
 
   // Keep the current order/event while switching views. Fall back to the
   // scenario that contains the current order, then to the demo defaults.
-  const eventMatch = location.pathname.match(/^\/events\/(\d+)\/(?:root-cause|impact)$/)
-  const orderMatch = location.pathname.match(/^\/orders\/([^/]+)$/)
-  const currentEventId = eventMatch ? Number(eventMatch[1]) : null
-  const currentOrder = orderMatch ? decodeURIComponent(orderMatch[1]) : null
+  const pathContext = parsePathContext(location.pathname)
+  const currentEventId = pathContext.eventId
+  const currentOrder = pathContext.order
   const contextOrder = new URLSearchParams(location.search).get('order') || null
   // Demo scenario metadata is only a fallback for the seeded walkthrough.
   // Real orders are anchored by the URL context or the order page's timeline.
@@ -167,25 +171,28 @@ export function Layout() {
     defaultImpactEvent: DEFAULT_IMPACT_EVENT,
   })
   const navOrder = resolvedNavigation.order
+  const activePath = (location.pathname.replace(/\/+$/, '') || '/').toLowerCase()
 
   const navigation = [
-    { to: '/', label: 'Overview', active: location.pathname === '/' },
+    { to: '/', label: 'Overview', active: activePath === '/' },
     {
-      to: `/orders/${encodeURIComponent(navOrder)}`,
+      to: resolvedNavigation.orderKnown
+        ? `/orders/${encodeURIComponent(navOrder)}`
+        : null,
       label: 'Timeline',
-      active: location.pathname.startsWith('/orders/'),
+      active: activePath.startsWith('/orders/'),
     },
     {
       to: resolvedNavigation.rootCauseHref,
       label: 'Root cause',
-      active: /^\/events\/\d+\/root-cause/.test(location.pathname),
+      active: /^\/events\/\d+\/root-cause/.test(activePath),
     },
     {
       to: resolvedNavigation.impactHref,
       label: 'Impact',
-      active: /^\/events\/\d+\/impact/.test(location.pathname),
+      active: /^\/events\/\d+\/impact/.test(activePath),
     },
-    { to: '/durations', label: 'Durations', active: location.pathname === '/durations' },
+    { to: '/durations', label: 'Durations', active: activePath === '/durations' },
   ]
 
   return (
@@ -197,16 +204,27 @@ export function Layout() {
             <span className="brand__name">SupplyTrace</span>
           </Link>
           <nav className="nav" aria-label="Main views">
-            {navigation.map((item) => (
-              <Link
-                key={item.label}
-                to={item.to}
-                className={item.active ? 'nav__link nav__link--active' : 'nav__link'}
-                aria-current={item.active ? 'page' : undefined}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navigation.map((item) =>
+              item.to ? (
+                <Link
+                  key={item.label}
+                  to={item.to}
+                  className={item.active ? 'nav__link nav__link--active' : 'nav__link'}
+                  aria-current={item.active ? 'page' : undefined}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <span
+                  key={item.label}
+                  className="nav__link nav__link--disabled"
+                  aria-disabled="true"
+                  title="Order number unavailable for this event"
+                >
+                  {item.label}
+                </span>
+              ),
+            )}
           </nav>
           <div className="header-tools">
             <HealthPill />
@@ -224,7 +242,7 @@ export function Layout() {
         </div>
       ) : null}
       <main className="page">
-        <ErrorBoundary key={location.key}>
+        <ErrorBoundary key={location.pathname}>
           <Outlet />
         </ErrorBoundary>
       </main>

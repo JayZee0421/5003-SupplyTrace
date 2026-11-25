@@ -15,7 +15,15 @@ function edgeKey(edge: GraphEdge): string {
   return `${edge.cause_event_id}-${edge.effect_event_id}-${edge.kind}`
 }
 
-export function RootCauseChain({ data, orderQuery }: { data: RootCause; orderQuery?: string }) {
+export function RootCauseChain({
+  data,
+  orderQuery,
+  selectedOrderId,
+}: {
+  data: RootCause
+  orderQuery?: string
+  selectedOrderId?: number | null
+}) {
   const ordered = [...data.nodes].sort(
     (a: GraphNode, b: GraphNode) =>
       b.steps - a.steps ||
@@ -68,7 +76,13 @@ export function RootCauseChain({ data, orderQuery }: { data: RootCause; orderQue
                 <div className="chain__card-wrap">
                   <GraphNodeCard
                     node={node}
-                    orderQuery={orderQuery}
+                    orderQuery={
+                      selectedOrderId !== null &&
+                      selectedOrderId !== undefined &&
+                      node.order_id === selectedOrderId
+                        ? orderQuery
+                        : ''
+                    }
                     markers={{
                       selected: node.steps === 0,
                       earliest: node.event_id === data.earliest_exception_event_id,

@@ -45,7 +45,8 @@ export function HomePage() {
                 className="text-link hero__trace-link"
                 to={`/events/${latest.event.event_id}/root-cause?order=${encodeURIComponent(latest.orderNumber)}`}
               >
-                Latest exception: event #{latest.event.event_id} ({latest.event.event_type_code})
+                {recent.failedCount > 0 ? 'Latest loaded exception' : 'Latest exception'}: event #
+                {latest.event.event_id} ({latest.event.event_type_code})
                 <ArrowRightIcon size={14} />
               </Link>
             ) : (

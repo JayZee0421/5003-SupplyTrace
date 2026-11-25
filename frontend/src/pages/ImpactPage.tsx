@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ApiError, fetchImpact } from '../api/client'
 import { useApi } from '../hooks/useApi'
@@ -13,13 +14,26 @@ import { Loading } from '../components/Loading'
 import { Metrics } from '../components/Metrics'
 import { SearchBar } from '../components/SearchBar'
 import { ArrowRightIcon } from '../components/icons'
+import type { Impact } from '../types'
+
+function orderLaneNote(orders: Impact['orders']): string {
+  if (orders.length > 1) {
+    return ` Order labels mark the first card of each affected order: ${orders
+      .map((order) => order.order_number)
+      .join(', ')}.`
+  }
+  if (orders.length === 1) {
+    return ` The row follows affected order ${orders[0].order_number}.`
+  }
+  return ''
+}
 
 export function ImpactPage() {
   const { eventId: eventIdParam = '' } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
   const eventId = parsePositiveInt(eventIdParam)
-  const contextOrder = new URLSearchParams(location.search).get('order')
+  const contextOrder = new URLSearchParams(location.search).get('order') || null
   const orderQuery = contextOrder ? `?order=${encodeURIComponent(contextOrder)}` : ''
 
   const state = useApi(
@@ -41,11 +55,17 @@ export function ImpactPage() {
   const sourceOrder = data?.orders.find(
     (order) => order.order_id === selected?.order_id,
   )?.order_number
-  const rootCauseOrderQuery = contextOrder
-    ? orderQuery
-    : sourceOrder
-      ? `?order=${encodeURIComponent(sourceOrder)}`
-      : orderQuery
+  const sourceOrderQuery = sourceOrder
+    ? `?order=${encodeURIComponent(sourceOrder)}`
+    : ''
+  const rootCauseOrderQuery = contextOrder ? orderQuery : sourceOrderQuery
+
+  useEffect(() => {
+    if (!sourceOrder || contextOrder !== null) return
+    const next = new URLSearchParams(location.search)
+    next.set('order', sourceOrder)
+    navigate(`${location.pathname}?${next.toString()}`, { replace: true })
+  }, [sourceOrder, contextOrder, location.pathname, location.search, navigate])
 
   return (
     <div>
@@ -62,7 +82,13 @@ export function ImpactPage() {
           kind="event"
           initialValue={eventId !== null ? String(eventId) : ''}
           buttonLabel="Inspect"
-          onSearch={(value) => navigate(`/events/${value}/impact${orderQuery}`)}
+          onSearch={(value) =>
+            navigate(
+              `/events/${value}/impact${
+                eventId !== null && value === String(eventId) ? orderQuery : ''
+              }`,
+            )
+          }
         />
       </header>
 
@@ -106,13 +132,7 @@ export function ImpactPage() {
                   <h2>Propagation graph</h2>
                   <p>
                     Selected event on the left; each column is one more hop downstream.
-                    {data.orders.length > 1
-                      ? ` Rows follow the affected orders, top to bottom: ${data.orders
-                          .map((order) => order.order_number)
-                          .join(', ')}.`
-                      : data.orders.length === 1
-                        ? ` The row follows affected order ${data.orders[0].order_number}.`
-                        : ''}
+                    {orderLaneNote(data.orders)}
                   </p>
                 </div>
                 <EdgeLegend edges={data.edges} />

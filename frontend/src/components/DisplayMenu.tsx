@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { AccessibilityIcon } from './icons'
 
 type ColorVision = 'standard' | 'redGreen' | 'blueYellow' | 'monochrome'
@@ -111,13 +112,23 @@ const CHECKBOX_OPTIONS: Array<{
 export function DisplayMenu() {
   const [preferences, setPreferences] = useState<DisplayPreferences>(readPreferences)
   const [open, setOpen] = useState(false)
+  const location = useLocation()
   const rootRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
+  const lastPathname = useRef(location.pathname)
 
   useLayoutEffect(() => {
     applyPreferences(preferences)
   }, [preferences])
+
+  useEffect(() => {
+    if (lastPathname.current === location.pathname) return
+    const focusWasInside = panelRef.current?.contains(document.activeElement) ?? false
+    lastPathname.current = location.pathname
+    setOpen(false)
+    if (focusWasInside) buttonRef.current?.focus()
+  }, [location.pathname])
 
   useEffect(() => {
     if (!open) return

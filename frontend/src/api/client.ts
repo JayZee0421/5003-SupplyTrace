@@ -118,11 +118,12 @@ async function request<T>(path: string, signal?: AbortSignal, attempt = 0): Prom
 
   const text = await response.text()
   let body: unknown = null
+  let parseFailed = false
   if (text) {
     try {
       body = JSON.parse(text)
     } catch {
-      body = null
+      parseFailed = true
     }
   }
 
@@ -139,10 +140,24 @@ async function request<T>(path: string, signal?: AbortSignal, attempt = 0): Prom
     )
   }
 
+  if (parseFailed || body === null) {
+    throw new ApiError(
+      'The API returned an empty or invalid JSON response.',
+      response.status,
+      'INVALID_RESPONSE',
+    )
+  }
+
   return body as T
 }
 
-const timelineInFlight = new Map<string, Promise<Timeline>>()
+interface SharedTimeline {
+  promise: Promise<Timeline>
+  controller: AbortController
+  waiters: number
+}
+
+const timelineInFlight = new Map<string, SharedTimeline>()
 
 /** Abort only this caller; a request shared with other callers keeps running. */
 function abortable<T>(promise: Promise<T>, signal?: AbortSignal): Promise<T> {
@@ -169,22 +184,43 @@ function abortable<T>(promise: Promise<T>, signal?: AbortSignal): Promise<T> {
 export function fetchTimeline(orderNumber: string, signal?: AbortSignal): Promise<Timeline> {
   let shared = timelineInFlight.get(orderNumber)
   if (!shared) {
-    const promise = request<Timeline>(`/api/orders/${encodeURIComponent(orderNumber)}/timeline`)
-    shared = promise
-    timelineInFlight.set(orderNumber, promise)
+    const controller = new AbortController()
+    const promise = request<Timeline>(
+      `/api/orders/${encodeURIComponent(orderNumber)}/timeline`,
+      controller.signal,
+    )
+    shared = { promise, controller, waiters: 0 }
+    timelineInFlight.set(orderNumber, shared)
     // The home page asks for the same seeded order from the preview, readiness
     // check and latest-exceptions panel; share that request but keep each
     // caller's abort signal local.
     promise.then(
       () => {
-        if (timelineInFlight.get(orderNumber) === promise) timelineInFlight.delete(orderNumber)
+        if (timelineInFlight.get(orderNumber) === shared) timelineInFlight.delete(orderNumber)
       },
       () => {
-        if (timelineInFlight.get(orderNumber) === promise) timelineInFlight.delete(orderNumber)
+        if (timelineInFlight.get(orderNumber) === shared) timelineInFlight.delete(orderNumber)
       },
     )
   }
-  return abortable(shared, signal)
+
+  const current = shared
+  current.waiters += 1
+  const result = abortable(current.promise, signal)
+  let released = false
+  const release = () => {
+    if (released) return
+    released = true
+    current.waiters -= 1
+    if (current.waiters === 0) {
+      if (timelineInFlight.get(orderNumber) === current) {
+        timelineInFlight.delete(orderNumber)
+      }
+      current.controller.abort()
+    }
+  }
+  result.then(release, release)
+  return result
 }
 
 export function fetchRootCause(

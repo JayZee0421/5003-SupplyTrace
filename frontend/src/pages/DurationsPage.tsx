@@ -88,7 +88,6 @@ export function DurationsPage() {
 
   const data = state.data
   const activeStages = data ? data.stages.filter((stage) => stage.sample_lines > 0) : []
-  const highestAverage = data ? topStage(data.stages, 'average_hours') : null
   const highestP90 = data ? topStage(data.stages, 'p90_hours') : null
   const largestSample = data
     ? data.stages.reduce((max, stage) => Math.max(max, stage.sample_lines), 0)
@@ -220,7 +219,7 @@ export function DurationsPage() {
                 value: formatHours(highestP90?.p90_hours ?? null),
                 hint: highestP90
                   ? `${highestP90.stage} · average ${formatHours(
-                      highestAverage?.average_hours ?? null,
+                      highestP90.average_hours,
                     )}`
                   : 'No samples',
               },

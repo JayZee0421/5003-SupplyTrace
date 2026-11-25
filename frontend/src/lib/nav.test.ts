@@ -6,6 +6,7 @@ import {
   DEMO_SCENARIOS,
 } from '../demo'
 import {
+  parsePathContext,
   resolveNavigation,
   resolveStoredContext,
   type NavigationInput,
@@ -50,6 +51,7 @@ describe('resolveNavigation', () => {
   it('uses the demo fallbacks on a first visit', () => {
     expect(navigate({})).toEqual({
       order: DEFAULT_ORDER,
+      orderKnown: true,
       rootCauseEvent: DEFAULT_TRACE_EVENT,
       impactEvent: DEFAULT_IMPACT_EVENT,
       rootCauseHref: `/events/${DEFAULT_TRACE_EVENT}/root-cause`,
@@ -147,10 +149,45 @@ describe('resolveNavigation', () => {
     const result = navigate({ currentEventId: 19 })
 
     expect(result.order).toBe(DEFAULT_ORDER)
+    expect(result.orderKnown).toBe(false)
     expect(result.rootCauseEvent).toBe(19)
     expect(result.impactEvent).toBe(19)
     expect(result.rootCauseHref).toBe('/events/19/root-cause')
     expect(result.impactHref).toBe('/events/19/impact')
+  })
+
+  it('uses the stored order for a bare link to the same event', () => {
+    const result = navigate({
+      currentEventId: 19,
+      lastContext: {
+        eventId: 19,
+        order: 'SO-SYN-000002',
+        eventOrder: 'SO-SYN-000002',
+      },
+    })
+
+    expect(result.order).toBe('SO-SYN-000002')
+    expect(result.orderKnown).toBe(true)
+    expect(result.rootCauseHref).toBe('/events/19/root-cause?order=SO-SYN-000002')
+    expect(result.impactHref).toBe('/events/19/impact?order=SO-SYN-000002')
+  })
+
+  it('does not attach an unknown order to fallback demo events', () => {
+    const result = navigate({ currentOrder: 'DOES-NOT-EXIST' })
+
+    expect(result.order).toBe('DOES-NOT-EXIST')
+    expect(result.rootCauseHref).toBe(`/events/${DEFAULT_TRACE_EVENT}/root-cause`)
+    expect(result.impactHref).toBe(`/events/${DEFAULT_IMPACT_EVENT}/impact`)
+  })
+
+  it('does not attach an order that was stored without an event', () => {
+    const result = navigate({
+      currentOrder: 'DOES-NOT-EXIST',
+      lastContext: { eventId: null, order: 'DOES-NOT-EXIST', eventOrder: null },
+    })
+
+    expect(result.rootCauseHref).toBe(`/events/${DEFAULT_TRACE_EVENT}/root-cause`)
+    expect(result.impactHref).toBe(`/events/${DEFAULT_IMPACT_EVENT}/impact`)
   })
 
   it('maps a scenario event without a query to its scenario order', () => {
@@ -159,6 +196,30 @@ describe('resolveNavigation', () => {
     expect(result.order).toBe('SO-SYN-000001')
     expect(result.rootCauseHref).toBe('/events/10/root-cause?order=SO-SYN-000001')
     expect(result.impactHref).toBe('/events/10/impact?order=SO-SYN-000001')
+  })
+})
+
+describe('parsePathContext', () => {
+  it('accepts trailing slashes and case-insensitive routes', () => {
+    expect(parsePathContext('/orders/SO-SYN-000002/')).toEqual({
+      eventId: null,
+      order: 'SO-SYN-000002',
+    })
+    expect(parsePathContext('/Events/57/impact')).toEqual({
+      eventId: 57,
+      order: null,
+    })
+  })
+
+  it('returns empty context for other pages', () => {
+    expect(parsePathContext('/durations')).toEqual({ eventId: null, order: null })
+  })
+
+  it('does not throw on a malformed percent escape', () => {
+    expect(parsePathContext('/orders/%E0%A4%A')).toEqual({
+      eventId: null,
+      order: '%E0%A4%A',
+    })
   })
 })
 

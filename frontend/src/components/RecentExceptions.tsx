@@ -26,6 +26,13 @@ export function RecentExceptions({
         <span className="recent-panel__count mono">{countLabel}</span>
       </header>
 
+      {!state.loading && !state.error && state.failedCount > 0 ? (
+        <p className="recent-panel__note" role="status">
+          {state.failedCount} of {state.total} order timelines could not be loaded; this list may
+          be incomplete.
+        </p>
+      ) : null}
+
       {state.loading ? (
         <p className="recent-panel__empty">Loading recent events...</p>
       ) : state.error ? (
@@ -33,7 +40,11 @@ export function RecentExceptions({
           Could not load recent events. Check that the API is running, then reload.
         </p>
       ) : state.exceptions.length === 0 ? (
-        <p className="recent-panel__empty">No exceptions in {scopeLabel}.</p>
+        <p className="recent-panel__empty">
+          {state.failedCount > 0
+            ? `No exceptions in the orders that loaded; ${state.failedCount} could not be checked.`
+            : `No exceptions in ${scopeLabel}.`}
+        </p>
       ) : (
         <div className="table-wrap">
           <table className="data-table recent-table">

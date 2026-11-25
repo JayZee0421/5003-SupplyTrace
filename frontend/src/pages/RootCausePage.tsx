@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ApiError, fetchRootCause } from '../api/client'
 import { DEMO_SCENARIOS } from '../demo'
@@ -6,6 +6,8 @@ import { useApi } from '../hooks/useApi'
 import { formatUtc, pluralize } from '../lib/format'
 import { graphDepth, selectedNode } from '../lib/graph'
 import { parsePositiveInt } from '../lib/ids'
+import { lookupOrderNumber } from '../lib/orderLookup'
+import type { GraphNode } from '../types'
 import { EdgeLegend, RootCauseChain } from '../components/RootCauseChain'
 import { EmptyState } from '../components/EmptyState'
 import { ErrorState } from '../components/ErrorState'
@@ -30,7 +32,7 @@ export function RootCausePage() {
   const navigate = useNavigate()
   const location = useLocation()
   const eventId = parsePositiveInt(eventIdParam)
-  const contextOrder = new URLSearchParams(location.search).get('order')
+  const contextOrder = new URLSearchParams(location.search).get('order') || null
 
   const state = useApi(
     `root-cause:${eventId ?? `invalid:${eventIdParam}`}`,
@@ -57,12 +59,61 @@ export function RootCausePage() {
       scenario.rootEventId === selected?.event_id ||
       scenario.traceFromEventId === selected?.event_id,
   )?.timelineOrder
+  const selectedOrderId = selected?.order_id ?? null
+  const [resolvedOrder, setResolvedOrder] = useState<{
+    eventId: number
+    order: string
+  } | null>(null)
+  const resolvedOrderNumber =
+    resolvedOrder?.eventId === eventId ? resolvedOrder.order : null
+
+  useEffect(() => {
+    if (
+      eventId === null ||
+      contextOrder !== null ||
+      scenarioOrder !== undefined ||
+      selectedOrderId === null
+    ) {
+      return
+    }
+
+    const controller = new AbortController()
+    lookupOrderNumber(eventId, selectedOrderId, controller.signal)
+      .then((order) => {
+        if (order) setResolvedOrder({ eventId, order })
+      })
+      .catch(() => {
+        // Keep the #order_id fallback when the lookup is unavailable.
+      })
+
+    return () => controller.abort()
+  }, [eventId, contextOrder, scenarioOrder, selectedOrderId])
+
+  useEffect(() => {
+    if (!resolvedOrderNumber || contextOrder !== null || scenarioOrder !== undefined) return
+    const next = new URLSearchParams(location.search)
+    next.set('order', resolvedOrderNumber)
+    navigate(`${location.pathname}?${next.toString()}`, { replace: true })
+  }, [
+    resolvedOrderNumber,
+    contextOrder,
+    scenarioOrder,
+    location.pathname,
+    location.search,
+    navigate,
+  ])
+
   const orderLabel =
     scenarioOrder ??
     contextOrder ??
+    resolvedOrderNumber ??
     (selected && selected.order_id !== null ? `#${selected.order_id}` : '—')
-  const navigationOrder = contextOrder ?? scenarioOrder
+  const navigationOrder = scenarioOrder ?? contextOrder ?? resolvedOrderNumber
   const orderQuery = navigationOrder ? `?order=${encodeURIComponent(navigationOrder)}` : ''
+  // The order context belongs to the selected event. A chain can contain
+  // events from other orders, so do not attach it blindly to every node.
+  const queryForNode = (node: GraphNode | undefined) =>
+    node && selectedOrderId !== null && node.order_id === selectedOrderId ? orderQuery : ''
   const orderLine = selected
     ? `${orderLabel} / ${
         selected.order_line_id !== null ? `#${selected.order_line_id}` : '—'
@@ -84,7 +135,13 @@ export function RootCausePage() {
           kind="event"
           initialValue={eventId !== null ? String(eventId) : ''}
           buttonLabel="Trace"
-          onSearch={(value) => navigate(`/events/${value}/root-cause${orderQuery}`)}
+          onSearch={(value) =>
+            navigate(
+              `/events/${value}/root-cause${
+                eventId !== null && value === String(eventId) ? orderQuery : ''
+              }`,
+            )
+          }
         />
       </header>
 
@@ -110,7 +167,7 @@ export function RootCausePage() {
               {
                 label: 'Earliest exception',
                 value: earliest ? (
-                  <Link to={`/events/${earliest.event_id}/root-cause${orderQuery}`}>
+                  <Link to={`/events/${earliest.event_id}/root-cause${queryForNode(earliest)}`}>
                     #{earliest.event_id}
                   </Link>
                 ) : (
@@ -121,7 +178,7 @@ export function RootCausePage() {
               {
                 label: 'Chain start',
                 value: chainStart ? (
-                  <Link to={`/events/${chainStart.event_id}/root-cause${orderQuery}`}>
+                  <Link to={`/events/${chainStart.event_id}/root-cause${queryForNode(chainStart)}`}>
                     #{chainStart.event_id}
                   </Link>
                 ) : (
@@ -153,7 +210,11 @@ export function RootCausePage() {
                   </div>
                   <EdgeLegend edges={data.edges} />
                 </header>
-                <RootCauseChain data={data} orderQuery={orderQuery} />
+                <RootCauseChain
+                  data={data}
+                  orderQuery={orderQuery}
+                  selectedOrderId={selectedOrderId}
+                />
                 {data.nodes.length === 1 ? (
                   <p className="panel__note">
                     No upstream cause is recorded for this event. It is the start of its own chain.
@@ -161,7 +222,10 @@ export function RootCausePage() {
                 ) : data.earliest_exception_event_id === data.selected_event_id ? (
                   <p className="panel__note">
                     No earlier WARNING or FAILED event exists in this chain. The selected event is
-                    the earliest exception and the root of its own chain.
+                    the earliest exception
+                    {data.chain_start_event_id === data.selected_event_id
+                      ? ' and the chain start.'
+                      : ', but earlier non-exception causes still precede it.'}
                   </p>
                 ) : null}
                 <p className="panel__note">
@@ -190,7 +254,9 @@ export function RootCausePage() {
                   {impactTarget ? (
                     <Link
                       className="btn btn--primary btn--block"
-                      to={`/events/${impactTarget}/impact${orderQuery}`}
+                      to={`/events/${impactTarget}/impact${
+                        queryForNode(earliest ?? selected)
+                      }`}
                     >
                       View impact of event #{impactTarget}
                       <ArrowRightIcon size={15} />

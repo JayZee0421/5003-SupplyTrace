@@ -8,6 +8,8 @@ export interface RecentExceptionsState {
   exceptions: RecentException[]
   loading: boolean
   error: boolean
+  failedCount: number
+  total: number
 }
 
 /**
@@ -23,6 +25,8 @@ export function useRecentExceptions(
     exceptions: [],
     loading: true,
     error: false,
+    failedCount: 0,
+    total: orderNumbers.length,
   })
 
   useEffect(() => {
@@ -41,10 +45,24 @@ export function useRecentExceptions(
           )
           .map((result) => result.value)
         const exceptions = collectRecentExceptions(timelines)
-        setState({ exceptions, loading: false, error: timelines.length === 0 })
+        setState({
+          exceptions,
+          loading: false,
+          error: timelines.length === 0,
+          failedCount: results.length - timelines.length,
+          total: results.length,
+        })
       })
       .catch(() => {
-        if (active) setState({ exceptions: [], loading: false, error: true })
+        if (active) {
+          setState({
+            exceptions: [],
+            loading: false,
+            error: true,
+            failedCount: orderNumbers.length,
+            total: orderNumbers.length,
+          })
+        }
       })
 
     return () => {
