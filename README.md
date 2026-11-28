@@ -2,15 +2,15 @@
 
 ## Part 5 Docker Quick Start
 
-SupplyTrace是一个基于PostgreSQL、FastAPI和React的供应链事件因果溯源系统。本节介绍如何使用Docker Compose在本地启动完整应用，包括数据库、后端API和前端可视化界面。
+SupplyTrace is a supply chain event causal tracing system based on PostgreSQL, FastAPI, and React. This section introduces how to launch the complete application locally using Docker Compose, including the database, backend API, and frontend visualization interface.
 
 ### 1. Requirements
 
-- Docker Desktop（包含Docker Compose）
-- 可用端口：55433、8002、5174
-- 首次构建需要网络连接以下载Docker镜像及项目依赖
+- Docker Desktop (including Docker Compose)
+- Available ports: 55433, 8002, 5174
+- An internet connection is required for the initial build to download Docker images and project dependencies
 
-以下命令均在项目根目录执行。
+All commands below should be executed from the project root directory.
 
 ### 2. Start Services
 
@@ -18,7 +18,7 @@ SupplyTrace是一个基于PostgreSQL、FastAPI和React的供应链事件因果�
 docker compose up -d --build
 ```
 
-该命令构建并启动三个服务：
+This command builds and starts three services:
 
 | Service | Technology | Local Address |
 |---|---|---|
@@ -27,73 +27,73 @@ docker compose up -d --build
 | API Documentation | Swagger UI | http://127.0.0.1:8002/docs |
 | PostgreSQL | PostgreSQL 16 | 127.0.0.1:55433 |
 
-检查容器状态：
+Check the container status:
 
 ```bash
 docker compose ps
 ```
 
-PostgreSQL使用Docker命名卷`part3_pgdata`持久化数据。停止或重新构建容器不会自动删除该卷。
+PostgreSQL uses the Docker named volume `part3_pgdata` for data persistence. Stopping or rebuilding containers does not automatically delete this volume.
 
 ### 3. Initialize Demo Database
 
-**仅首次启动全新数据库时执行以下命令。**
+**Execute the following command only when initializing a new database for the first time.**
 
 ```bash
 docker compose exec -T backend python -m scripts.setup_part3_db --database-url postgresql://supplytrace:supplytrace@postgres:5432/supplytrace_part3
 ```
 
-初始化脚本将：
+The initialization script will:
 
-1. 检查Schema、验证SQL及数据文件是否存在。
-2. 校验CSV文件的SHA256、表头和预期行数。
-3. 创建SupplyTrace的16张关系表。
-4. 导入随仓库提供的57条固定演示事件及关联数据。
-5. 执行数据验证。
+1. Check whether the schema, validation SQL, and data files exist.
+2. Verify the SHA256 checksums, headers, and expected row counts of the CSV files.
+3. Create the 16 relational tables of SupplyTrace.
+4. Import the 57 fixed demo events and associated data provided in the repository.
+5. Perform data validation.
 
-脚本会拒绝初始化已经包含SupplyTrace Schema的数据库，不会主动清空或替换已有数据。
+The script refuses to initialize a database that already contains the SupplyTrace schema and does not automatically clear or replace existing data.
 
-**注意：**如果设置了`PART3_DB_PASSWORD`，初始化命令中的数据库密码也需要相应调整。
+**Note:** If `PART3_DB_PASSWORD` is set, the database password in the initialization command must be adjusted accordingly.
 
-初始化过程中如果出现错误，请先检查日志和数据库状态。不要直接删除Docker Volume或对已有数据库重复初始化。
+If an error occurs during initialization, check the logs and database status first. Do not directly delete the Docker volume or repeatedly initialize an existing database.
 
 ### 4. Open the Application
 
-完成初始化后，在浏览器访问：
+After initialization, open the following address in a browser:
 
-**Frontend：** http://127.0.0.1:5174
+**Frontend:** http://127.0.0.1:5174
 
-演示功能包括：
+The demo features include:
 
-- Overview：查看订单及最新异常事件。
-- Order Timeline：查看订单事件时间线。
-- Root Cause：递归追溯异常事件的上游因果链。
-- Impact Analysis：分析异常事件影响的下游事件及订单。
-- Stage Durations：查看各业务环节的平均耗时和P90耗时。
+- Overview: View orders and their latest abnormal events.
+- Order Timeline: View the event timeline of an order.
+- Root Cause: Recursively trace the upstream causal chain of an abnormal event.
+- Impact Analysis: Analyze downstream events and orders affected by an abnormal event.
+- Stage Durations: View the average and P90 durations of each business stage.
 
-演示数据使用57条固定事件，与Part 2的100k、500k、1m性能评测数据集相互独立。
+The demo dataset contains 57 fixed events and is independent of the 100k, 500k, and 1m performance benchmark datasets in Part 2.
 
 ### 5. Health Check
 
-检查后端健康状态：
+Check the backend health status:
 
 ```bash
 curl http://127.0.0.1:8002/health
 ```
 
-查看容器日志：
+View container logs:
 
 ```bash
 docker compose logs --tail=100 backend
 ```
 
-前端通过Docker网络访问Backend，并使用Vite开发代理转发API请求。
+The frontend accesses the Backend through the Docker network and uses the Vite development proxy to forward API requests.
 
-当前Docker配置用于本地开发和课程演示，前端运行的是Vite Development Server，而非生产环境静态文件服务器。
+The current Docker configuration is intended for local development and course demonstrations. The frontend runs on the Vite Development Server rather than a production static file server.
 
 ### 6. Tests and Benchmarks
 
-项目已完成以下测试和评测：
+The following tests and benchmarks have been completed:
 
 | Category | Result |
 |---|---|
@@ -104,44 +104,44 @@ docker compose logs --tail=100 backend
 | Data quality checks | 24/24 at each dataset scale |
 | Benchmark scales | 100k / 500k / 1m events |
 
-详细结果：
+Detailed results:
 
-- [Backend测试记录](docs/part3/TEST_RESULTS.txt)
-- [测试总结](docs/part3/TEST_SUMMARY.md)
-- [性能评测总结](docs/part3/BENCHMARK_SUMMARY.md)
-- [查询计划与索引分析](docs/part3/PERFORMANCE.md)
-- [Frontend测试及使用说明](frontend/README.md)
+- [Backend Test Records](docs/part3/TEST_RESULTS.txt)
+- [Test Summary](docs/part3/TEST_SUMMARY.md)
+- [Benchmark Summary](docs/part3/BENCHMARK_SUMMARY.md)
+- [Query Plan and Index Analysis](docs/part3/PERFORMANCE.md)
+- [Frontend Testing and Usage Guide](frontend/README.md)
 
-前端自动化测试可在`frontend`目录执行：
+Frontend automated tests can be executed from the `frontend` directory:
 
 ```bash
 npm ci
 npm test
 ```
 
-性能评测使用独立的PostgreSQL数据库，不应在演示数据库中直接运行数据替换或清空操作。
+Performance benchmarks use separate PostgreSQL databases. Data replacement or clearing operations should not be performed directly on the demo database.
 
 ### 7. Stop Services Safely
 
-停止服务并保留数据库：
+Stop the services while preserving the database:
 
 ```bash
 docker compose down
 ```
 
-重新启动：
+Restart the services:
 
 ```bash
 docker compose up -d
 ```
 
-**不要使用`docker compose down -v`清理演示环境。** `-v`会删除Compose管理的数据库命名卷，可能造成已有数据丢失。
+**Do not use `docker compose down -v` to clean up the demo environment.** The `-v` option removes the database named volume managed by Compose, which may result in the loss of existing data.
 
 ---
 
-## Part 4 前端与可视化
+## Part 4 Frontend and Visualization
 
-React + TypeScript 前端，包含订单时间线、根因追溯、影响传导和环节耗时四个视图，首页打开即汇总种子订单的最新异常，全部读取 Part 3 的真实 API。启动、环境变量、路由和演示路径见 [前端说明](frontend/README.md)。
+The React + TypeScript frontend includes four views: order timeline, root cause tracing, impact propagation, and stage durations. The homepage summarizes the latest abnormal events of the seed orders upon loading, and all views retrieve data from the actual Part 3 APIs. For startup instructions, environment variables, routing, and demo paths, see the [Frontend Guide](frontend/README.md).
 
 ```bash
 cd frontend
@@ -149,23 +149,23 @@ npm install
 npm run dev
 ```
 
-开发服务器默认将 `/api`、`/health` 代理到 `http://127.0.0.1:8001`。后端未启动时可设置 `VITE_USE_MOCK=true` 使用供应商延期场景的固定响应。演示分镜见 [docs/part4/VIDEO_STORYBOARD.md](docs/part4/VIDEO_STORYBOARD.md)。
+By default, the development server proxies `/api` and `/health` to `http://127.0.0.1:8001`. When the backend is not running, `VITE_USE_MOCK=true` can be set to use fixed responses for the supplier delay scenario. For the demo storyboard, see [docs/part4/VIDEO_STORYBOARD.md](docs/part4/VIDEO_STORYBOARD.md).
 
-## Part 3 后端与核心查询
+## Part 3 Backend and Core Queries
 
-已完成四类 FastAPI API、递归图查询、响应模型、错误处理及测试。详见 [成员 3 交付入口](docs/part3/README.md)、[启动说明](docs/part3/DATABASE_SETUP.md)、[API 契约](docs/part3/API_CONTRACT.md)、[查询计划对比](docs/part3/PERFORMANCE.md)。
+Four categories of FastAPI APIs, recursive graph queries, response models, error handling, and tests have been completed. See the [Member 3 Deliverables](docs/part3/README.md), [Setup Guide](docs/part3/DATABASE_SETUP.md), [API Contract](docs/part3/API_CONTRACT.md), and [Query Plan Comparison](docs/part3/PERFORMANCE.md).
 
 ```bash
 .venv/bin/python -m pip install -r requirements-dev.txt
-# 先按启动说明配置 .env 并初始化独立 PostgreSQL 开发库
+# Configure .env and initialize a separate PostgreSQL development database according to the setup guide first
 .venv/bin/python -m uvicorn backend.main:app --host 127.0.0.1 --port 8001
 ```
 
-Swagger：`http://127.0.0.1:8001/docs`。完整回归：`.venv/bin/python -m scripts.verify_part3`（需可创建独立测试库的本机 PostgreSQL）。本次 40 项测试通过；十万事件的 24 项数据检查通过。
+Swagger: `http://127.0.0.1:8001/docs`. Full regression testing: `.venv/bin/python -m scripts.verify_part3` (requires a local PostgreSQL instance that allows the creation of a separate test database). All 40 tests passed; all 24 data checks passed for the 100k-event dataset.
 
-## Part 2 合成数据
+## Part 2 Synthetic Data
 
-需要 Python 3.11+、PostgreSQL 16+ 和 `psql`。在仓库根目录执行以下命令，使用独立的开发库。
+Python 3.11+, PostgreSQL 16+, and `psql` are required. Execute the following commands from the repository root directory using a separate development database.
 
 ```bash
 python data_generator.py --seed 5003 --events 100000 --output generated/events-100000
@@ -174,42 +174,42 @@ psql -d supplytrace_generated -v ON_ERROR_STOP=1 -f supplytrace_schema_v1.sql
 python import_data.py generated/events-100000 --dbname supplytrace_generated
 ```
 
-生成器接受以下规模，建议验收时统一用 `--seed 5003`。输出目录须为新目录。`generated/` 中的大文件可用生成命令重建。
+The generator supports the following dataset scales. It is recommended to consistently use `--seed 5003` for acceptance testing. The output directory must be a new directory. Large files in `generated/` can be regenerated using the generation commands.
 
-| `--events` | 用途 | 建议输出目录 |
+| `--events` | Purpose | Recommended Output Directory |
 |---:|---|---|
-| `100000` | Part 2 里程碑用数据 | `generated/events-100000` |
-| `500000` | 50 万事件数据 | `generated/events-500000` |
-| `1000000` | 100 万事件数据 | `generated/events-1000000` |
-| `57` | 单独重建固定评测数据 | `generated/benchmark-57` |
+| `100000` | Part 2 milestone dataset | `generated/events-100000` |
+| `500000` | 500k-event dataset | `generated/events-500000` |
+| `1000000` | 1m-event dataset | `generated/events-1000000` |
+| `57` | Regenerate the fixed benchmark dataset separately | `generated/benchmark-57` |
 
-仓库随附 [57 条固定评测数据](benchmark_data/manifest.json)。在已初始化 schema 的空测试库中，直接执行 `python import_data.py benchmark_data --dbname supplytrace_generated` 即可导入。
+The repository includes a [fixed benchmark dataset of 57 events](benchmark_data/manifest.json). In an empty test database with an initialized schema, directly execute `python import_data.py benchmark_data --dbname supplytrace_generated` to import the dataset.
 
-同一 Python 版本下，相同种子和规模产生相同的 CSV 和清单。导入使用 schema 的外键和触发器，验证通过后才提交数据库事务。默认只接受空库。重跑同一独立开发库时，可以显式传入 `--replace` 清空并替换 SupplyTrace 表。只运行已导入数据的检查时，传入 `--validate-only`。连接参数可通过标准 `PG*` 环境变量或 `--dbname` 连接串设置。`psql` 不在 PATH 时可传入 `--psql`。
+With the same Python version, the same seed and dataset scale produce identical CSV files and manifests. The import process uses the foreign keys and triggers defined in the schema and commits the database transaction only after validation passes. By default, only empty databases are accepted. When rerunning the import on the same separate development database, `--replace` can be explicitly specified to clear and replace the SupplyTrace tables. To run checks only on previously imported data, specify `--validate-only`. Connection parameters can be configured through standard `PG*` environment variables or a `--dbname` connection string. If `psql` is not in PATH, specify `--psql`.
 
-见 [合成数据字典](data_dictionary.md)、[固定评测场景](benchmark_cases.json) 和 [数据质量报告](data_quality_report.md)。
+See the [Synthetic Data Dictionary](data_dictionary.md), [Fixed Benchmark Scenarios](benchmark_cases.json), and [Data Quality Report](data_quality_report.md).
 
-## Part 1 数据库设计
+## Part 1 Database Design
 
-Part 1 文件涵盖 Track 1 的需求、架构、ERD、schema、约束、索引、数据字典、固定样例和查询。
+Part 1 files cover the requirements, architecture, ERD, schema, constraints, indexes, data dictionary, fixed sample data, and queries for Track 1.
 
-## 文件
+## Files
 
-| 文件 | 用途 |
+| File | Purpose |
 |---|---|
-| `SupplyTrace_Part1_数据库设计.md` | 需求说明、架构说明、索引说明和报告3-5节初稿 |
-| `SupplyTrace_Part1_验证记录.md` | 执行与负向测试记录 |
-| `supplytrace_schema_v1.sql` | 完整schema |
-| `migrations/001_initial_schema.sql` | 初始迁移 |
-| `supplytrace_sample_data.sql` | 固定异常场景 |
-| `supplytrace_sample_queries.sql` | 四类查询 |
-| `supplytrace_validation_queries.sql` | 完整性检查 |
-| `supplytrace_data_dictionary.csv` | 16 表、151 字段字典 |
-| `assets/` | 架构图、ERD 和场景图 |
+| `SupplyTrace_Part1_数据库设计.md` | Requirements description, architecture description, index description, and initial draft of Sections 3–5 of the report |
+| `SupplyTrace_Part1_验证记录.md` | Execution and negative test records |
+| `supplytrace_schema_v1.sql` | Complete schema |
+| `migrations/001_initial_schema.sql` | Initial migration |
+| `supplytrace_sample_data.sql` | Fixed abnormal event scenario |
+| `supplytrace_sample_queries.sql` | Four categories of queries |
+| `supplytrace_validation_queries.sql` | Integrity checks |
+| `supplytrace_data_dictionary.csv` | Data dictionary covering 16 tables and 151 fields |
+| `assets/` | Architecture diagram, ERD, and scenario diagrams |
 
-## 载入
+## Data Loading
 
-在 PostgreSQL 16 开发库执行：
+Execute the following commands in a PostgreSQL 16 development database:
 
 ```bash
 createdb supplytrace
@@ -219,17 +219,16 @@ psql -d supplytrace -v ON_ERROR_STOP=1 -f supplytrace_validation_queries.sql
 psql -d supplytrace -v ON_ERROR_STOP=1 -f supplytrace_sample_queries.sql
 ```
 
-`supplytrace_sample_data.sql` 会清空 SupplyTrace 表，只能用于开发库。`supplytrace_schema_v1.sql` 与 `migrations/001_initial_schema.sql` 内容相同，初始化时只执行其中一个。
+`supplytrace_sample_data.sql` clears the SupplyTrace tables and must only be used in a development database. `supplytrace_schema_v1.sql` and `migrations/001_initial_schema.sql` have identical contents. Execute only one of them during initialization.
 
-## 验收值
+## Expected Validation Results
 
-| 检查项 | 结果 |
+| Check | Result |
 |---|---|
-| 订单 `SO-2026-1101-A` 时间线 | 11 条事件 |
-| 事件 215 根因链 | 11 个节点，最早异常为事件 204 |
-| 事件 204 影响范围 | 订单 A 和订单 B |
-| 固定场景 | 17 条事件、1 个根事件、5 个异常事件 |
-| 最大因果深度 | 10 |
+| Timeline of order `SO-2026-1101-A` | 11 events |
+| Root cause chain of event 215 | 11 nodes, with event 204 as the earliest abnormal event |
+| Impact scope of event 204 | Order A and Order B |
+| Fixed scenario | 17 events, 1 root event, and 5 abnormal events |
+| Maximum causal depth | 10 |
 
-后续结构变更使用新的 migration，并同步更新 ERD、数据字典和 API 模型。
-
+Future schema changes should use new migrations, with corresponding updates to the ERD, data dictionary, and API models.
