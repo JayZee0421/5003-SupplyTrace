@@ -1,4 +1,143 @@
-# SupplyTrace 本地开发数据
+# SupplyTrace
+
+## Part 5 Docker Quick Start
+
+SupplyTrace是一个基于PostgreSQL、FastAPI和React的供应链事件因果溯源系统。本节介绍如何使用Docker Compose在本地启动完整应用，包括数据库、后端API和前端可视化界面。
+
+### 1. Requirements
+
+- Docker Desktop（包含Docker Compose）
+- 可用端口：55433、8002、5174
+- 首次构建需要网络连接以下载Docker镜像及项目依赖
+
+以下命令均在项目根目录执行。
+
+### 2. Start Services
+
+```bash
+docker compose up -d --build
+```
+
+该命令构建并启动三个服务：
+
+| Service | Technology | Local Address |
+|---|---|---|
+| Frontend | React + Vite | http://127.0.0.1:5174 |
+| Backend | FastAPI | http://127.0.0.1:8002 |
+| API Documentation | Swagger UI | http://127.0.0.1:8002/docs |
+| PostgreSQL | PostgreSQL 16 | 127.0.0.1:55433 |
+
+检查容器状态：
+
+```bash
+docker compose ps
+```
+
+PostgreSQL使用Docker命名卷`part3_pgdata`持久化数据。停止或重新构建容器不会自动删除该卷。
+
+### 3. Initialize Demo Database
+
+**仅首次启动全新数据库时执行以下命令。**
+
+```bash
+docker compose exec -T backend python -m scripts.setup_part3_db --database-url postgresql://supplytrace:supplytrace@postgres:5432/supplytrace_part3
+```
+
+初始化脚本将：
+
+1. 检查Schema、验证SQL及数据文件是否存在。
+2. 校验CSV文件的SHA256、表头和预期行数。
+3. 创建SupplyTrace的16张关系表。
+4. 导入随仓库提供的57条固定演示事件及关联数据。
+5. 执行数据验证。
+
+脚本会拒绝初始化已经包含SupplyTrace Schema的数据库，不会主动清空或替换已有数据。
+
+**注意：**如果设置了`PART3_DB_PASSWORD`，初始化命令中的数据库密码也需要相应调整。
+
+初始化过程中如果出现错误，请先检查日志和数据库状态。不要直接删除Docker Volume或对已有数据库重复初始化。
+
+### 4. Open the Application
+
+完成初始化后，在浏览器访问：
+
+**Frontend：** http://127.0.0.1:5174
+
+演示功能包括：
+
+- Overview：查看订单及最新异常事件。
+- Order Timeline：查看订单事件时间线。
+- Root Cause：递归追溯异常事件的上游因果链。
+- Impact Analysis：分析异常事件影响的下游事件及订单。
+- Stage Durations：查看各业务环节的平均耗时和P90耗时。
+
+演示数据使用57条固定事件，与Part 2的100k、500k、1m性能评测数据集相互独立。
+
+### 5. Health Check
+
+检查后端健康状态：
+
+```bash
+curl http://127.0.0.1:8002/health
+```
+
+查看容器日志：
+
+```bash
+docker compose logs --tail=100 backend
+```
+
+前端通过Docker网络访问Backend，并使用Vite开发代理转发API请求。
+
+当前Docker配置用于本地开发和课程演示，前端运行的是Vite Development Server，而非生产环境静态文件服务器。
+
+### 6. Tests and Benchmarks
+
+项目已完成以下测试和评测：
+
+| Category | Result |
+|---|---|
+| Backend automated tests | 40 passed |
+| Frontend automated tests | 53 passed |
+| API smoke tests | 10 passed |
+| HTTP integration checks | 9 passed |
+| Data quality checks | 24/24 at each dataset scale |
+| Benchmark scales | 100k / 500k / 1m events |
+
+详细结果：
+
+- [Backend测试记录](docs/part3/TEST_RESULTS.txt)
+- [测试总结](docs/part3/TEST_SUMMARY.md)
+- [性能评测总结](docs/part3/BENCHMARK_SUMMARY.md)
+- [查询计划与索引分析](docs/part3/PERFORMANCE.md)
+- [Frontend测试及使用说明](frontend/README.md)
+
+前端自动化测试可在`frontend`目录执行：
+
+```bash
+npm ci
+npm test
+```
+
+性能评测使用独立的PostgreSQL数据库，不应在演示数据库中直接运行数据替换或清空操作。
+
+### 7. Stop Services Safely
+
+停止服务并保留数据库：
+
+```bash
+docker compose down
+```
+
+重新启动：
+
+```bash
+docker compose up -d
+```
+
+**不要使用`docker compose down -v`清理演示环境。** `-v`会删除Compose管理的数据库命名卷，可能造成已有数据丢失。
+
+---
 
 ## Part 4 前端与可视化
 

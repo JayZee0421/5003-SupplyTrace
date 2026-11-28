@@ -1,0 +1,315 @@
+{
+  "timestamp": "2026-11-22T17:02:43.480380+00:00",
+  "postgres": "PostgreSQL 16.16 (Debian 16.16-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "event_count": 1000000,
+  "manifest_sha256": "1bac5726e6cad033bd09a0ed3db129b5fe58196f0124ee80bde4547faa3e6cf6",
+  "seed": 5003,
+  "quality_checks": {
+    "events": 1000000,
+    "orders": 109890,
+    "checks_run": 24,
+    "order_lines": 109890,
+    "root_events": 109890,
+    "failed_checks": 0,
+    "late_signatures": 10993,
+    "secondary_links": 3,
+    "supplier_delays": 3665,
+    "max_causal_depth": 9,
+    "quality_failures": 3669,
+    "transport_disruptions": 3656
+  },
+  "scenarios": [
+    {
+      "scenario": "supplier_delay",
+      "root_event_id": 3,
+      "chain_nodes": 10,
+      "impacted_orders": [
+        "SO-SYN-000001",
+        "SO-SYN-000002"
+      ]
+    },
+    {
+      "scenario": "quality_failure",
+      "root_event_id": 23,
+      "chain_nodes": 10,
+      "impacted_orders": [
+        "SO-SYN-000003",
+        "SO-SYN-000004"
+      ]
+    },
+    {
+      "scenario": "transport_disruption",
+      "root_event_id": 46,
+      "chain_nodes": 10,
+      "impacted_orders": [
+        "SO-SYN-000005",
+        "SO-SYN-000006"
+      ]
+    }
+  ],
+  "core": {
+    "timeline": {
+      "query_parameters": {
+        "event_id": 3,
+        "max_depth": 64,
+        "order_id": 1,
+        "order_number": null,
+        "order_line_id": null,
+        "start_time": null,
+        "end_time": null
+      },
+      "median_ms": 0.01,
+      "runs_ms": [
+        0.014,
+        0.012,
+        0.009,
+        0.009,
+        0.01
+      ],
+      "shared_hit_blocks": 4,
+      "shared_read_blocks": 0,
+      "indexes": [
+        "idx_events_order_time"
+      ]
+    },
+    "root_cause": {
+      "query_parameters": {
+        "event_id": 10,
+        "max_depth": 64,
+        "order_id": 1,
+        "order_number": null,
+        "order_line_id": null,
+        "start_time": null,
+        "end_time": null
+      },
+      "median_ms": 0.041,
+      "runs_ms": [
+        0.053,
+        0.041,
+        0.049,
+        0.039,
+        0.037
+      ],
+      "shared_hit_blocks": 40,
+      "shared_read_blocks": 0,
+      "indexes": [
+        "supply_chain_events_pkey"
+      ]
+    },
+    "impact": {
+      "query_parameters": {
+        "event_id": 3,
+        "max_depth": 64,
+        "order_id": 1,
+        "order_number": null,
+        "order_line_id": null,
+        "start_time": null,
+        "end_time": null
+      },
+      "median_ms": 0.201,
+      "runs_ms": [
+        0.202,
+        0.201,
+        0.208,
+        0.177,
+        0.174
+      ],
+      "shared_hit_blocks": 150,
+      "shared_read_blocks": 0,
+      "indexes": [
+        "idx_events_caused_by",
+        "supply_chain_events_pkey"
+      ]
+    },
+    "stage_durations": {
+      "query_parameters": {
+        "event_id": 3,
+        "max_depth": 64,
+        "order_id": 1,
+        "order_number": null,
+        "order_line_id": null,
+        "start_time": null,
+        "end_time": null
+      },
+      "median_ms": 2077.113,
+      "runs_ms": [
+        2170.38,
+        2077.113,
+        2150.164,
+        2060.316,
+        2075.55
+      ],
+      "shared_hit_blocks": 8185,
+      "shared_read_blocks": 18211,
+      "indexes": []
+    }
+  },
+  "index_comparisons": {
+    "caused_by": {
+      "index": "idx_events_caused_by",
+      "with_index": {
+        "query_parameters": {
+          "event_id": 3
+        },
+        "median_ms": 0.007,
+        "runs_ms": [
+          0.007,
+          0.006,
+          0.011,
+          0.012,
+          0.007
+        ],
+        "shared_hit_blocks": 4,
+        "shared_read_blocks": 0,
+        "indexes": [
+          "idx_events_caused_by"
+        ]
+      },
+      "without_index": {
+        "query_parameters": {
+          "event_id": 3
+        },
+        "median_ms": 57.551,
+        "runs_ms": [
+          57.551,
+          57.281,
+          58.062,
+          57.271,
+          58.942
+        ],
+        "shared_hit_blocks": 5981,
+        "shared_read_blocks": 17635,
+        "indexes": []
+      },
+      "results_equal": true,
+      "result_rows": 1
+    },
+    "entity_time": {
+      "index": "idx_events_entity_time",
+      "with_index": {
+        "query_parameters": {},
+        "median_ms": 0.029,
+        "runs_ms": [
+          0.033,
+          0.029,
+          0.028,
+          0.033,
+          0.029
+        ],
+        "shared_hit_blocks": 42,
+        "shared_read_blocks": 0,
+        "indexes": [
+          "idx_events_entity_time"
+        ]
+      },
+      "without_index": {
+        "query_parameters": {},
+        "median_ms": 54.529,
+        "runs_ms": [
+          54.511,
+          55.033,
+          54.529,
+          54.603,
+          54.348
+        ],
+        "shared_hit_blocks": 6933,
+        "shared_read_blocks": 16771,
+        "indexes": []
+      },
+      "results_equal": true,
+      "result_rows": 50
+    },
+    "type_time": {
+      "index": "idx_events_type_time",
+      "with_index": {
+        "query_parameters": {},
+        "median_ms": 0.037,
+        "runs_ms": [
+          0.037,
+          0.041,
+          0.035,
+          0.037,
+          0.036
+        ],
+        "shared_hit_blocks": 48,
+        "shared_read_blocks": 0,
+        "indexes": [
+          "idx_events_type_time"
+        ]
+      },
+      "without_index": {
+        "query_parameters": {},
+        "median_ms": 46.77,
+        "runs_ms": [
+          47.355,
+          46.77,
+          46.861,
+          45.651,
+          46.193
+        ],
+        "shared_hit_blocks": 7509,
+        "shared_read_blocks": 16195,
+        "indexes": []
+      },
+      "results_equal": true,
+      "result_rows": 50
+    }
+  },
+  "traversal_comparison": {
+    "results_equal": true,
+    "before_part1": {
+      "query_parameters": {
+        "event_id": 3,
+        "max_depth": 64,
+        "order_id": 1,
+        "order_number": null,
+        "order_line_id": null,
+        "start_time": null,
+        "end_time": null
+      },
+      "median_ms": 4183.871,
+      "runs_ms": [
+        4156.67,
+        4183.871,
+        4171.337,
+        4391.463,
+        4241.685
+      ],
+      "shared_hit_blocks": 63276,
+      "shared_read_blocks": 125720,
+      "indexes": [
+        "supply_chain_events_pkey"
+      ]
+    },
+    "after_part3": {
+      "query_parameters": {
+        "event_id": 3,
+        "max_depth": 64,
+        "order_id": 1,
+        "order_number": null,
+        "order_line_id": null,
+        "start_time": null,
+        "end_time": null
+      },
+      "median_ms": 0.102,
+      "runs_ms": [
+        0.122,
+        0.083,
+        0.099,
+        0.102,
+        0.108
+      ],
+      "shared_hit_blocks": 78,
+      "shared_read_blocks": 0,
+      "indexes": [
+        "idx_events_caused_by",
+        "supply_chain_events_pkey"
+      ]
+    }
+  },
+  "index_definitions": [
+    "CREATE INDEX idx_events_caused_by ON public.supply_chain_events USING btree (caused_by_event_id)",
+    "CREATE INDEX idx_events_entity_time ON public.supply_chain_events USING btree (entity_type, entity_id, event_time DESC, event_id DESC)",
+    "CREATE INDEX idx_events_type_time ON public.supply_chain_events USING btree (event_type_code, event_time DESC, event_id DESC)"
+  ]
+}
